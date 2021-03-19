@@ -15,3 +15,5 @@ class Film(SqlAlchemyBase):
 
     genre_id = Column('genre_id', Integer, ForeignKey('genres.id'), nullable=False)
     genre = relationship('Genre', back_populates='film')
+
+    session = relationship("Session")

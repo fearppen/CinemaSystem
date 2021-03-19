@@ -1,0 +1,20 @@
+from sqlalchemy import Column, Integer, Float, ForeignKey
+from sqlalchemy.orm import relationship
+
+from data.db_session import SqlAlchemyBase
+
+
+class Ticket(SqlAlchemyBase):
+    __tablename__ = "tickets"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    number = Column(Integer, nullable=False)
+    cost = Column(Float, nullable=False)
+
+    chair_id = Column("chair_id", Integer, ForeignKey('chairs.id'), nullable=False)
+    chair = relationship("Chair", back_populates='ticket')
+
+    session_id = Column("session_id", Integer, ForeignKey('sessions.id'), nullable=False)
+    session = relationship("Session", back_populates='ticket')
+
+    record = relationship("Record")
