@@ -1,24 +1,21 @@
-from datetime import date
-
 from data import db_session
-from data.film import Film
 from data.genre import Genre
 
 db_session.global_init("db/system.db")
 session = db_session.create_session()
 
-genre_roman = Genre(title='Роман')
-genre_fan = Genre(title='Фантастика')
-session.add_all([genre_roman, genre_fan])
-
-film1 = Film(title="film1", release_date=date.today(),
-             director="Spielberg", duration="8h7m", genre=genre_roman)
-film2 = Film(title="film2", release_date=date.today(),
-             director="Schumaher", duration="8h7m", genre=genre_fan)
-film3 = Film(title="film3", release_date=date.today(),
-             director="Nolan", duration="8h7m", genre=genre_roman)
-film4 = Film(title="film4", release_date=date.today(),
-             director="Richi", duration="8h7m", genre=genre_fan)
-session.add_all([film1, film2, film3, film4])
-
+genres = {"Роман": Genre(title='Роман'), "Биографический": Genre(title='Биографический'),
+          "Триллер": Genre(title='Триллер'), "Боевик": Genre(title='Боевик'),
+          "Вестерн": Genre(title='Вестерн'), "Военный": Genre(title='Военный'),
+          "Детектив": Genre(title='Детектив'), "Документальный": Genre(title='Документальный'),
+          "Фантастика": Genre(title='Фантастика'), "Драма": Genre(title='Драма'),
+          "Исторический": Genre(title='Исторический'), "Комедия": Genre(title='Комедия'),
+          "Криминал": Genre(title='Криминал'), "Мелодрама": Genre(title='Мелодрама'),
+          "Мистика": Genre(title='Мистика'), "Мюзикл": Genre(title='Мюзикл'),
+          "Начный": Genre(title='Начный'), "Нуар": Genre(title='Нуар'),
+          "Приключения": Genre(title='Приключения'), "Артхаус": Genre(title='Артхаус'),
+          "Семейный": Genre(title='Семейный'), "Спорт": Genre(title='Спорт'),
+          "Ужасы": Genre(title='Ужасы'), "Фэнтези": Genre(title='Фэнтези'),
+          "Эротика": Genre(title='Эротика')}
+session.add_all(genres.values())
 session.commit()
