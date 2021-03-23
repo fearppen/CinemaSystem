@@ -1,8 +1,8 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from data.db_session import SqlAlchemyBase
-from data.hall_session import hall_session_table
+from domain.db_session import SqlAlchemyBase
+from domain.hall_session import hall_session_table
 
 
 class Session(SqlAlchemyBase):

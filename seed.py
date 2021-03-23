@@ -1,5 +1,5 @@
-from data import db_session
-from data.genre import Genre
+from domain import db_session
+from domain.genre import Genre
 
 db_session.global_init("db/system.db")
 session = db_session.create_session()

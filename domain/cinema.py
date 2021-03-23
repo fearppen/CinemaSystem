@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
-from data.db_session import SqlAlchemyBase
+from domain.db_session import SqlAlchemyBase
 
 
 class Cinema(SqlAlchemyBase):

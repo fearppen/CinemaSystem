@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from data.db_session import SqlAlchemyBase
-from data.hall_chair import hall_chair_table
-from data.hall_session import hall_session_table
+from domain.db_session import SqlAlchemyBase
+from domain.hall_chair import hall_chair_table
+from domain.hall_session import hall_session_table
 
 
 class Hall(SqlAlchemyBase):

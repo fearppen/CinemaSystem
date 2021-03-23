@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
-from data.db_session import SqlAlchemyBase
-from data.record_user import record_user_table
+from domain.db_session import SqlAlchemyBase
+from domain.record_user import record_user_table
 
 
 class Record(SqlAlchemyBase):

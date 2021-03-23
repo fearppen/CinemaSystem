@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 
-from data.db_session import SqlAlchemyBase
-from data.hall_chair import hall_chair_table
+from domain.db_session import SqlAlchemyBase
+from domain.hall_chair import hall_chair_table
 
 
 class Chair(SqlAlchemyBase):
