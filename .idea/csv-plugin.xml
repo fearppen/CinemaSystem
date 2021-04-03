@@ -24,6 +24,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\repository\halls_repository.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\repository\sessions_repository.py">
           <value>
             <Attribute>
