@@ -30,29 +30,29 @@ class IFilmsRepository(ABC):
 
 class FilmsRepositorySQLAlchemy(IFilmsRepository):
     def get_all(self):
-        session = db_session.create_session()
-        return session.query(Film).all()
+        new_db_session = db_session.create_session()
+        return new_db_session.query(Film).all()
 
     def get_film(self, film_id: int):
-        session = db_session.create_session()
-        return session.query(Film).filter(Film.id == film_id)
+        new_db_session = db_session.create_session()
+        return new_db_session.query(Film).filter(Film.id == film_id)
 
     def add(self, film: Film):
-        session = db_session.create_session()
-        session.add(film)
-        session.commit()
+        new_db_session = db_session.create_session()
+        new_db_session.add(film)
+        new_db_session.commit()
 
     def update(self, film_id: int, new_film: Film):
-        session = db_session.create_session()
-        film = session.query(Film).filter(Film.id == film_id)
+        new_db_session = db_session.create_session()
+        film = new_db_session.query(Film).filter(Film.id == film_id)
         film.title = new_film.title
         film.release_date = new_film.release_date
         film.duration = new_film.duration
         film.director = new_film.director
         film.genre_id = new_film.genre_id
-        session.commit()
+        new_db_session.commit()
 
     def delete(self, film_id: int):
-        session = db_session.create_session()
-        session.delete(session.query(Film).filter(Film.id == film_id))
-        session.commit()
+        new_db_session = db_session.create_session()
+        new_db_session.delete(new_db_session.query(Film).filter(Film.id == film_id))
+        new_db_session.commit()
