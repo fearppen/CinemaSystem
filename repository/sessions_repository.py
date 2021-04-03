@@ -26,7 +26,7 @@ class ISessionsRepository(ABC):
         pass
 
 
-class FilmsRepositorySQLAlchemy(ISessionsRepository):
+class SessionsRepositorySQLAlchemy(ISessionsRepository):
     def get_all(self):
         new_db_session = db_session.create_session()
         return new_db_session.query(Session).all()
