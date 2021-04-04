@@ -9,7 +9,9 @@ class Record(SqlAlchemyBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     purchase_date = Column(DateTime, nullable=False)
-    record_type = Column(Integer, nullable=False)
+
+    record_type_id = Column("record_type_id", Integer, ForeignKey("record_types.id"), nullable=False)
+    record_type = relationship("RecordType", back_populates='record')
 
     ticket_id = Column("ticket_id", Integer, ForeignKey("tickets.id"), nullable=False)
     ticket = relationship("Ticket", back_populates='record')

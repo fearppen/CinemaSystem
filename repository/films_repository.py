@@ -3,8 +3,6 @@ from abc import ABC, abstractmethod
 from domain import db_session
 from domain.film import Film
 
-db_session.global_init("db/system.db")
-
 
 class IFilmsRepository(ABC):
     @abstractmethod
