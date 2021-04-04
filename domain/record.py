@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
-from domain.record_user import record_user_table
 
 
 class Record(SqlAlchemyBase):
@@ -15,4 +14,5 @@ class Record(SqlAlchemyBase):
     ticket_id = Column("ticket_id", Integer, ForeignKey("tickets.id"), nullable=False)
     ticket = relationship("Ticket", back_populates='record')
 
-    user = relationship("User", secondary=record_user_table, back_populates='records')
+    user_id = Column("user_id", Integer, ForeignKey("users.id"), nullable=False)
+    user = relationship("User", back_populates='record')

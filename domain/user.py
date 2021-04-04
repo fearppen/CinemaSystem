@@ -1,8 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
-from domain.record_user import record_user_table
 
 
 class User(SqlAlchemyBase):
@@ -13,7 +12,7 @@ class User(SqlAlchemyBase):
     password = Column(String, nullable=False)
     email = Column(String, nullable=False)
 
-    records = relationship("Record", secondary=record_user_table, back_populates='user')
+    record = relationship("Record")
 
-    role_id = Column("role_id", Integer, nullable=False)
+    role_id = Column("role_id", Integer, ForeignKey("roles.id"), nullable=False)
     role = relationship("Role", back_populates="user")
