@@ -1,8 +1,7 @@
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
-from domain.hall_chair import hall_chair_table
 
 
 class Chair(SqlAlchemyBase):
@@ -12,6 +11,7 @@ class Chair(SqlAlchemyBase):
     row = Column(Integer, nullable=False)
     place = Column(Integer, nullable=False)
 
-    hall = relationship("Hall", secondary=hall_chair_table, back_populates='chairs')
+    hall_id = Column("hall_id", Integer, ForeignKey('halls.id'), nullable=False)
+    hall = relationship("Hall", back_populates='chair')
 
     ticket = relationship("Ticket")

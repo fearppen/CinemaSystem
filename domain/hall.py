@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
-from domain.hall_chair import hall_chair_table
 from domain.hall_session import hall_session_table
 
 
@@ -17,4 +16,4 @@ class Hall(SqlAlchemyBase):
 
     session = relationship("Session", secondary=hall_session_table, back_populates='halls')
 
-    chairs = relationship("Chair", secondary=hall_chair_table, back_populates='hall')
+    chair = relationship("Chair")
