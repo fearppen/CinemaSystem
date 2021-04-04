@@ -9,3 +9,4 @@ from .ticket import Ticket
 from .record import Record
 from .user import User
 from .role import Role
+from .record_type import RecordType
