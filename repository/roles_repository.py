@@ -14,7 +14,7 @@ class IRolesRepository(ABC):
         pass
 
 
-class GenresRepositorySQLAlchemy(IRolesRepository):
+class RolesRepositorySQLAlchemy(IRolesRepository):
     def get_all(self):
         new_db_session = db_session.create_session()
         return new_db_session.query(Role).all()
