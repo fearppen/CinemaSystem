@@ -2,9 +2,10 @@ from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Chair(SqlAlchemyBase):
+class Chair(SqlAlchemyBase, SerializerMixin):
     __tablename__ = "chairs"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

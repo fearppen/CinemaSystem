@@ -2,9 +2,10 @@ from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Record(SqlAlchemyBase):
+class Record(SqlAlchemyBase, SerializerMixin):
     __tablename__ = "records"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
