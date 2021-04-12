@@ -1,3 +1,4 @@
+from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -5,7 +6,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class User(SqlAlchemyBase, SerializerMixin):
+class User(SqlAlchemyBase, SerializerMixin, UserMixin):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

@@ -5,7 +5,7 @@ class UserService:
     def get_all(self):
         return UsersRepositorySQLAlchemy.get_all()
 
-    def get_user(self, user_id):
+    def get_user(self, user_id: int):
         return UsersRepositorySQLAlchemy.get_user(user_id)
 
     def add(self, user):

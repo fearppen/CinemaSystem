@@ -5,7 +5,7 @@ from services.user_service import UserService
 
 
 class UserResource(Resource):
-    def get(self, user_id):
+    def get(self, user_id: int):
         return jsonify({"user": [item.to_dict for item in UserService.get_user(user_id)]})
 
     def post(self, user):
