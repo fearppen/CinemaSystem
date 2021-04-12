@@ -2,9 +2,10 @@ from sqlalchemy import Column, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Cost(SqlAlchemyBase):
+class Cost(SqlAlchemyBase, SerializerMixin):
     __tablename__ = "costs"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

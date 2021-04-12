@@ -5,8 +5,7 @@ from services.genre_service import GenreService
 
 
 class GenreResources(Resource):
-    @staticmethod
-    def get():
+    def get(self):
         return jsonify(
             {"genres": [item.to_dict for item in GenreService.all_genres()]}
         )

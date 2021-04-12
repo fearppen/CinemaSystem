@@ -2,9 +2,10 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Cinema(SqlAlchemyBase):
+class Cinema(SqlAlchemyBase, SerializerMixin):
     __tablename__ = "cinemas"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

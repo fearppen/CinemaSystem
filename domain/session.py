@@ -3,9 +3,10 @@ from sqlalchemy.orm import relationship
 
 from domain.db_session import SqlAlchemyBase
 from domain.hall_session import hall_session_table
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Session(SqlAlchemyBase):
+class Session(SqlAlchemyBase, SerializerMixin):
     __tablename__ = "sessions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
