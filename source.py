@@ -5,7 +5,7 @@ from controllers.users_controller import UserResource
 from domain import db_session
 from domain.user import User
 from forms.login_form import LoginForm
-from forms.register_form import RegistrationForm
+from forms.registration_form import RegistrationForm
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "yandex_lyceum_secret_key"
