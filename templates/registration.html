@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 
-{%block content%}
-<div class="container">
-    <form class="login_form" method="post">
-        <div class="mb-3">
-            <input type="email" class="form-control" id="email" placeholder="Электронна почта">
-        </div>
-        <div class="mb-3">
-            <input type="text" class="form-control" id="login" placeholder="Логин">
-        </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" id="password" placeholder="Пароль">
-        </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" id="password_against" placeholder="Пароль повторно">
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Зарегестрироваться</button>
-        </div>
-    </form>
-</div>
-{%endblock%}
+{% block content %}
+    <div class="container">
+        <form name="registration_form" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.email(class="form-control", type="email", placeholder="Электронна почта") }}
+            </div>
+            <div class="mb-3">
+                {{ form.login(class="form-control", placeholder="Логин") }}
+            </div>
+            <div class="mb-3">
+                {{ form.password(class="form-control", type="password", placeholder="Пароль") }}
+            </div>
+            <div class="mb-3">
+                {{ form.password_again(class="form-control", type="password", placeholder="Повторите пароль") }}
+            </div>
+            <div class="mb-3">
+                {{ form.submit(type="submit", class="btn btn-primary") }}
+            </div>
+            <div class="mb-3">
+                {{ message }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

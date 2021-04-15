@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\forms\login_form.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\repository\cinema_repository.py">
           <value>
             <Attribute>
@@ -53,6 +60,20 @@
           </value>
         </entry>
         <entry key="\source.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\templates\login.html">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\templates\registration.html">
           <value>
             <Attribute>
               <option name="separator" value="," />

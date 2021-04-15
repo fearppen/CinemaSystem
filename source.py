@@ -5,6 +5,7 @@ from controllers.users_controller import UserResource
 from domain import db_session
 from domain.user import User
 from forms.login_form import LoginForm
+from forms.register_form import RegistrationForm
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "yandex_lyceum_secret_key"
@@ -27,10 +28,15 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
-        return render_template('login.html',
-                               message="Неправильный логин или пароль",
-                               form=form)
-    return render_template('login.html', title='Авторизация', form=form)
+        return render_template('login.html', name_page='Авторизация',
+                               message="Неправильный логин или пароль", form=form)
+    return render_template('login.html', name_page='Авторизация', form=form)
+
+
+@app.route('/registration')
+def registration():
+    form = RegistrationForm()
+    return render_template("registration.html", name_page="Регистрация", form=form)
 
 
 if __name__ == "__main__":
