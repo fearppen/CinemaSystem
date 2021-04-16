@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\repository\users_repository.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\seed.py">
           <value>
             <Attribute>
@@ -70,6 +77,13 @@
           <value>
             <Attribute>
               <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\services\login_service.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
             </Attribute>
           </value>
         </entry>

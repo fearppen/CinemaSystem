@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 
+from controllers.login_controller import LoginResource
 from domain import db_session
 from forms.authorisation_form import AuthorisationForm
 from forms.registration_form import RegistrationForm
@@ -12,8 +13,14 @@ app.config["SECRET_KEY"] = "yandex_lyceum_secret_key"
 def authorisation():
     form = AuthorisationForm()
     if form.validate_on_submit():
-        return render_template("authorisation.html", name_page="Авторизация",
-                               type_page="Авторизация", message="", form=form)
+        resource = LoginResource()
+        message = resource.login(form)
+        if message:
+            print(message)
+            return render_template("authorisation.html", name_page="Авторизация",
+                                   type_page="Авторизация", message=message, form=form)
+        else:
+            return render_template("index.html", name_page="Билетная система")
     return render_template("authorisation.html", type_page="Авторизация",
                            name_page="Авторизация", form=form)
 

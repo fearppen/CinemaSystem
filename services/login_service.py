@@ -9,12 +9,13 @@ def is_this_user_in_bd(all_users: dict, email, password):
         for i in users:
             flag = False
             for key, value in i.items():
-                if key == "email" and value == email:
+                if key == "email" and value == email.data:
                     flag = True
-                if key == "password" and check_password_hash(value, password) and flag:
-                    return ""
-                elif flag and key == "password":
-                    return "Пароль неверный"
+                if flag and key == "password":
+                    if check_password_hash(value, password.data):
+                        return ""
+                    else:
+                        return "Пароль неверный"
     return "Такого пользователя не существует"
 
 
