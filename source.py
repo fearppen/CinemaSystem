@@ -13,8 +13,9 @@ def authorisation():
     form = AuthorisationForm()
     if form.validate_on_submit():
         return render_template("authorisation.html", name_page="Авторизация",
-                               message="", form=form)
-    return render_template("authorisation.html", name_page="Авторизация", form=form)
+                               type_page="Авторизация", message="", form=form)
+    return render_template("authorisation.html", type_page="Авторизация",
+                           name_page="Авторизация", form=form)
 
 
 @app.route("/registration", methods=["GET", "POST"])
@@ -22,8 +23,9 @@ def registration():
     form = RegistrationForm()
     if form.validate_on_submit():
         return render_template("registration.html", name_page="Регистрация",
-                               message="", form=form)
-    return render_template("registration.html", name_page="Регистрация", form=form)
+                               type_page="Регистрация", message="", form=form)
+    return render_template("registration.html", type_page="Регистрация",
+                           name_page="Регистрация", form=form)
 
 
 @app.route("/")
