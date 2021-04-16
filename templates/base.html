@@ -10,9 +10,16 @@
         <title>{{name_page}}</title>
       </head>
       <body>
+        <header>
+            <nav class="navbar navbar-light bg-light">
+                <h1><a href="/"> Билетная система </a></h1>
+            </nav>
+        </header>
         <div class="text-center">
             <h1>{{type_page}}</h1>
         </div>
-        {%block content%}{%endblock%}
+        <main role="main" class="container">
+            {% block content %}{% endblock %}
+        </main>
       </body>
     </html>

@@ -1,42 +1,34 @@
-from flask import Flask, redirect, render_template
-from flask_login import LoginManager, login_user
+from flask import Flask, render_template
 
-from controllers.users_controller import UserResource
 from domain import db_session
-from domain.user import User
-from forms.login_form import LoginForm
+from forms.authorisation_form import AuthorisationForm
 from forms.registration_form import RegistrationForm
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "yandex_lyceum_secret_key"
 
-login_manager = LoginManager()
-login_manager.init_app(app)
 
-
-@login_manager.user_loader
-def load_user(user_id: int):
-    return UserResource.get(user_id)
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
+@app.route("/authorisation", methods=["GET", "POST"])
+def authorisation():
+    form = AuthorisationForm()
     if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.email == form.email.data).first()
-        if user and user.check_password(form.password.data):
-            login_user(user, remember=form.remember_me.data)
-            return redirect("/")
-        return render_template('login.html', name_page='Авторизация',
-                               message="Неправильный логин или пароль", form=form)
-    return render_template('login.html', name_page='Авторизация', form=form)
+        return render_template("authorisation.html", name_page="Авторизация",
+                               message="", form=form)
+    return render_template("authorisation.html", name_page="Авторизация", form=form)
 
 
-@app.route('/registration')
+@app.route("/registration", methods=["GET", "POST"])
 def registration():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        return render_template("registration.html", name_page="Регистрация",
+                               message="", form=form)
     return render_template("registration.html", name_page="Регистрация", form=form)
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
