@@ -1,26 +1,31 @@
-from flask import jsonify
 from flask_restful import Resource
 
 from services.tickets_service import TicketService
 
 
 class TicketResource(Resource):
+    ticket_service = TicketService()
+
     def get(self, ticket_id):
-        return jsonify({"ticket": [item.to_dict for item in TicketService.get_ticket(ticket_id)]})
+        return {"ticket": [item.to_dict(only=("id", "number", "cost", "chair_id", "session_id"))
+                           for item in self.ticket_service.get_ticket(ticket_id)]}
 
     def post(self, ticket):
-        TicketService.add(ticket)
-        return jsonify({'success': 'OK'})
+        self.ticket_service.add(ticket)
+        return {'success': 'OK'}
 
     def put(self, ticket_id, ticket):
-        TicketService.update(ticket_id, ticket)
-        return jsonify({'success': 'OK'})
+        self.ticket_service.update(ticket_id, ticket)
+        return {'success': 'OK'}
 
     def delete(self, ticket_id):
-        TicketService.delete(ticket_id)
-        return jsonify({'success': 'OK'})
+        self.ticket_service.delete(ticket_id)
+        return {'success': 'OK'}
 
 
 class TicketsListResources(Resource):
+    ticket_service = TicketService()
+
     def get(self):
-        return jsonify({"tickets": [item.to_dict for item in TicketService.get_all()]})
+        return {"tickets": [item.to_dict(only=("id", "number", "cost", "chair_id", "session_id"))
+                            for item in self.ticket_service.get_all()]}

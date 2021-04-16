@@ -1,26 +1,33 @@
-from flask import jsonify
 from flask_restful import Resource
 
 from services.films_service import FilmService
 
 
 class FilmResource(Resource):
+    film_service = FilmService()
+
     def get(self, film_id):
-        return jsonify({"film": [item.to_dict for item in FilmService.get_film(film_id)]})
+        return {"film":
+                    [item.to_dict(only=("title", "release_date", "duration", "director", "genre_id"))
+                     for item in self.film_service.get_film(film_id)]}
 
     def post(self, film):
-        FilmService.add(film)
-        return jsonify({'success': 'OK'})
+        self.film_service.add(film)
+        return {'success': 'OK'}
 
     def put(self, film_id, film):
-        FilmService.update(film_id, film)
-        return jsonify({'success': 'OK'})
+        self.film_service.update(film_id, film)
+        return {'success': 'OK'}
 
     def delete(self, film_id):
-        FilmService.delete(film_id)
-        return jsonify({'success': 'OK'})
+        self.film_service.delete(film_id)
+        return {'success': 'OK'}
 
 
 class FilmListResources(Resource):
+    film_service = FilmService()
+
     def get(self):
-        return jsonify({"films": [item.to_dict for item in FilmService.get_all()]})
+        return {"films":
+                    [item.to_dict(only=("title", "release_date", "duration", "director", "genre_id"))
+                     for item in self.film_service.get_all()]}

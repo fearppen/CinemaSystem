@@ -1,26 +1,31 @@
-from flask import jsonify
 from flask_restful import Resource
 
 from services.halls_service import HallService
 
 
 class HallResource(Resource):
+    hall_service = HallService()
+
     def get(self, hall_id):
-        return jsonify({"hall": [item.to_dict for item in HallService.get_hall(hall_id)]})
+        return {"hall": [item.to_dict(only=("title", "cinema_id"))
+                         for item in self.hall_service.get_hall(hall_id)]}
 
     def post(self, hall):
-        HallService.add(hall)
-        return jsonify({'success': 'OK'})
+        self.hall_service.add(hall)
+        return {'success': 'OK'}
 
     def put(self, hall_id, hall):
-        HallService.update(hall_id, hall)
-        return jsonify({'success': 'OK'})
+        self.hall_service.update(hall_id, hall)
+        return {'success': 'OK'}
 
     def delete(self, hall_id):
-        HallService.delete(hall_id)
-        return jsonify({'success': 'OK'})
+        self.hall_service.delete(hall_id)
+        return {'success': 'OK'}
 
 
 class HallListResources(Resource):
+    hall_service = HallService()
+
     def get(self):
-        return jsonify({"halls": [item.to_dict for item in HallService.get_all()]})
+        return {"halls": [item.to_dict(only=("title", "cinema_id"))
+                          for item in self.hall_service.get_all()]}

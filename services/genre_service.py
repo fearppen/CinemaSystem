@@ -1,13 +1,11 @@
-from abc import ABC, abstractmethod
 from repository.genres_repository import GenresRepositorySQLAlchemy
 
 
-class IGenreService(ABC):
-    @abstractmethod
-    def all_genres(self):
-        pass
+class GenreService:
+    genres_repository = GenresRepositorySQLAlchemy()
 
-
-class GenreService(IGenreService):
     def all_genres(self):
-        return GenresRepositorySQLAlchemy.get_all()
+        return self.genres_repository.get_all()
+
+    def get_genre(self, genre_id):
+        return self.genres_repository.get_genre(genre_id)
