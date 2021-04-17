@@ -10,9 +10,9 @@ class User(SqlAlchemyBase, SerializerMixin, UserMixin):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    login = Column(String, nullable=False)
+    login = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
-    email = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
 
     record = relationship("Record")
 

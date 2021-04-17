@@ -66,6 +66,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\seeds\genres_seed.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\seeds\roles_seed.py">
           <value>
             <Attribute>
