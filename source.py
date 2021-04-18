@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager, login_required, logout_user, login_user
+from werkzeug.security import check_password_hash
 
 from controllers.login_controller import LoginResource
 from controllers.logout_user_controller import LogoutUser
@@ -31,13 +32,14 @@ def index():
 def authorisation():
     form = AuthorisationForm()
     if form.validate_on_submit():
-        resource = LoginResource()
-        message = resource.login(form)
-        if message:
-            return render_template("authorisation.html", name_page="Авторизация",
-                                   type_page="Авторизация", message=message, form=form)
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.email == form.email.data).first()
+        if user and check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/")
         else:
-            return render_template("index.html", name_page="Основная")
+            return render_template("authorisation.html", name_page="Авторизация",
+                                   type_page="Авторизация", form=form)
     return render_template("authorisation.html", type_page="Авторизация",
                            name_page="Авторизация", form=form)
 
@@ -60,8 +62,7 @@ def registration():
 @app.route("/logout")
 @login_required
 def logout():
-    resource = LogoutUser()
-    resource.logout()
+    logout_user()
     return redirect("/")
 
 
