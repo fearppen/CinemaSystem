@@ -1,7 +1,8 @@
 from flask import Flask, render_template
-from flask_login import current_user, LoginManager
+from flask_login import LoginManager
 
 from controllers.login_controller import LoginResource
+from controllers.registration_controller import RegistrationResource
 from domain import db_session
 from domain.user import User
 from forms.authorisation_form import AuthorisationForm
@@ -39,15 +40,20 @@ def authorisation():
 def registration():
     form = RegistrationForm()
     if form.validate_on_submit():
-        return render_template("registration.html", name_page="Регистрация",
-                               type_page="Регистрация", message="", form=form)
+        resource = RegistrationResource()
+        message = resource.registration(form)
+        if message:
+            return render_template("registration.html", name_page="Регистрация",
+                                   type_page="Регистрация", message=message, form=form)
+        else:
+            return render_template("index.html", name_page="Билетная система")
     return render_template("registration.html", type_page="Регистрация",
                            name_page="Регистрация", form=form)
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", name_page="Основная")
 
 
 if __name__ == "__main__":
