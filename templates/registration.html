@@ -14,7 +14,7 @@
             </div>
             <div class="mb-3">
                 {{ form.login(class="form-control", placeholder="Логин") }}
-                {% for error in form.name.errors %}
+                {% for error in form.login.errors %}
                     <p class="alert alert-danger" role="alert">
                         {{ error }}
                     </p>
