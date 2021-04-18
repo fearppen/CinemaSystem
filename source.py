@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-from flask import Flask, render_template
-from flask_login import LoginManager
-=======
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_required
->>>>>>> 48914a16aa111089133fcb81f95436ced99cc83b
 
 from controllers.login_controller import LoginResource
+from controllers.logout_user_controller import LogoutUser
 from controllers.registration_controller import RegistrationResource
 from domain import db_session
 from domain.user import User
@@ -25,14 +21,11 @@ def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
-<<<<<<< HEAD
-=======
 
 @app.route("/")
 def index():
     return render_template("index.html", name_page="Основная")
 
->>>>>>> 48914a16aa111089133fcb81f95436ced99cc83b
 
 @app.route("/authorisation", methods=["GET", "POST"])
 def authorisation():
@@ -59,25 +52,17 @@ def registration():
             return render_template("registration.html", name_page="Регистрация",
                                    type_page="Регистрация", message=message, form=form)
         else:
-<<<<<<< HEAD
-            return render_template("index.html", name_page="Билетная система")
-=======
             return redirect("/")
->>>>>>> 48914a16aa111089133fcb81f95436ced99cc83b
     return render_template("registration.html", type_page="Регистрация",
                            name_page="Регистрация", form=form)
 
 
-<<<<<<< HEAD
-@app.route("/")
-def index():
-    return render_template("index.html", name_page="Основная")
-=======
 @app.route("/logout")
 @login_required
 def logout():
+    resource = LogoutUser()
+    resource.logout()
     return redirect("/")
->>>>>>> 48914a16aa111089133fcb81f95436ced99cc83b
 
 
 if __name__ == "__main__":
