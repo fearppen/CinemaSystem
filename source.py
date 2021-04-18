@@ -1,12 +1,23 @@
 from flask import Flask, render_template
+from flask_login import current_user, LoginManager
 
 from controllers.login_controller import LoginResource
 from domain import db_session
+from domain.user import User
 from forms.authorisation_form import AuthorisationForm
 from forms.registration_form import RegistrationForm
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "yandex_lyceum_secret_key"
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(User).get(user_id)
 
 
 @app.route("/authorisation", methods=["GET", "POST"])
@@ -16,7 +27,6 @@ def authorisation():
         resource = LoginResource()
         message = resource.login(form)
         if message:
-            print(message)
             return render_template("authorisation.html", name_page="Авторизация",
                                    type_page="Авторизация", message=message, form=form)
         else:

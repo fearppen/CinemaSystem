@@ -13,6 +13,14 @@
         <header>
             <nav class="navbar navbar-light bg-light">
                 <h1><a href="/"> Билетная система </a></h1>
+                {% if current_user.is_authenticated %}
+                    <a class="navbar-brand" href="/logout">{{ current_user.login }}</a>
+                {% else %}
+                    <p>
+                      <a class="btn btn-primary " href="/registration">Зарегистрироваться</a>
+                      <a class="btn btn-success" href="/authorisation">Войти</a>
+                    </p>
+                {% endif %}
             </nav>
         </header>
         <div class="text-center">
