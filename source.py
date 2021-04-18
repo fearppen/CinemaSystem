@@ -37,7 +37,7 @@ def authorisation():
             return render_template("authorisation.html", name_page="Авторизация",
                                    type_page="Авторизация", message=message, form=form)
         else:
-            return redirect("/")
+            return render_template("index.html", name_page="Основная")
     return render_template("authorisation.html", type_page="Авторизация",
                            name_page="Авторизация", form=form)
 
@@ -52,7 +52,7 @@ def registration():
             return render_template("registration.html", name_page="Регистрация",
                                    type_page="Регистрация", message=message, form=form)
         else:
-            return redirect("/")
+            return render_template("index.html", name_page="Основная")
     return render_template("registration.html", type_page="Регистрация",
                            name_page="Регистрация", form=form)
 
