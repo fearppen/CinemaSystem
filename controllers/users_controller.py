@@ -26,5 +26,5 @@ class UsersListResources(Resource):
     user_service = UserService()
 
     def get(self):
-        return {"users": [item.to_dict(only=("login", "password", "email"))
+        return {"users": [item.to_dict(only=("login", "password", "email", "role_id"))
                           for item in self.user_service.get_all()]}

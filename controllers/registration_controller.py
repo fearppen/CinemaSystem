@@ -1,8 +1,10 @@
+from flask_restful import Resource
+
 from services.registration_service import RegistrationService
 
 
-class RegistrationController:
+class RegistrationResource(Resource):
     registration_service = RegistrationService()
 
-    def registration(self, form):
+    def post(self, form):
         return self.registration_service.registration(form)
