@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-from flask_login import LoginManager
+from flask import Flask, render_template, redirect
+from flask_login import LoginManager, login_required
 
 from controllers.login_controller import LoginResource
 from controllers.registration_controller import RegistrationResource
@@ -21,6 +21,11 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
+@app.route("/")
+def index():
+    return render_template("index.html", name_page="Основная")
+
+
 @app.route("/authorisation", methods=["GET", "POST"])
 def authorisation():
     form = AuthorisationForm()
@@ -31,7 +36,7 @@ def authorisation():
             return render_template("authorisation.html", name_page="Авторизация",
                                    type_page="Авторизация", message=message, form=form)
         else:
-            return render_template("index.html", name_page="Билетная система")
+            return redirect("/")
     return render_template("authorisation.html", type_page="Авторизация",
                            name_page="Авторизация", form=form)
 
@@ -46,14 +51,15 @@ def registration():
             return render_template("registration.html", name_page="Регистрация",
                                    type_page="Регистрация", message=message, form=form)
         else:
-            return render_template("index.html", name_page="Билетная система")
+            return redirect("/")
     return render_template("registration.html", type_page="Регистрация",
                            name_page="Регистрация", form=form)
 
 
-@app.route("/")
-def index():
-    return render_template("index.html", name_page="Основная")
+@app.route("/logout")
+@login_required
+def logout():
+    return redirect("/")
 
 
 if __name__ == "__main__":
