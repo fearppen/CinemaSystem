@@ -1,10 +1,8 @@
-from flask_restful import Resource
-
 from forms.authorisation_form import AuthorisationForm
 from services.login_service import LoginService
 
 
-class LoginResource(Resource):
+class LoginResource:
     login_service = LoginService()
 
     def post(self, form: AuthorisationForm):

@@ -2,6 +2,7 @@ from domain.user import User
 from controllers.users_controller import UserResource, UsersListResources
 from forms.registration_form import RegistrationForm
 from werkzeug.security import generate_password_hash
+from flask_login import login_user
 
 
 class RegistrationService:
@@ -19,6 +20,8 @@ class RegistrationService:
             user.password = generate_password_hash(user.password)
             try:
                 self.user_resource.post(user)
+                login_user(user, remember=form.submit.data)
+                return ""
             except Exception:
                 return "Такой пользователь уже есть в базе данных"
         else:
