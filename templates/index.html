@@ -3,7 +3,11 @@
 {% block content %}
     <h1>Записи в блоге</h1>
 
+<<<<<<< HEAD
     {% if current_user.is_authenticated %}
+=======
+    {% if current_user.is_authenticated and current_user.role_id == 1%}
+>>>>>>> 48914a16aa111089133fcb81f95436ced99cc83b
      <a href="/news" class="btn btn-warning">
                 Новая новость
             </a>
