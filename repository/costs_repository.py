@@ -33,7 +33,7 @@ class CostsRepositorySQLAlchemy(ICostsRepository):
 
     def get_cost(self, cost_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Cost).filter(Cost.id == cost_id)
+        return new_db_session.query(Cost).filter(Cost.id == cost_id).first()
 
     def add(self, cost: Cost):
         new_db_session = db_session.create_session()

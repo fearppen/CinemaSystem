@@ -33,7 +33,7 @@ class FilmsRepositorySQLAlchemy(IFilmsRepository):
 
     def get_film(self, film_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Film).filter(Film.id == film_id)
+        return new_db_session.query(Film).filter(Film.id == film_id).first()
 
     def add(self, film: Film):
         new_db_session = db_session.create_session()

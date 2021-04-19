@@ -6,7 +6,7 @@ class UserResource(Resource):
     user_service = UserService()
 
     def get(self, user_id: int):
-        return {"user": [item.to_dict(only=("login", "password", "email"))
+        return {"user": [item.to_dict(only=("id", "login", "password", "email", "role_id"))
                          for item in self.user_service.get_user(user_id)]}
 
     def post(self, user):
@@ -26,5 +26,5 @@ class UsersListResources(Resource):
     user_service = UserService()
 
     def get(self):
-        return {"users": [item.to_dict(only=("login", "password", "email", "role_id"))
+        return {"users": [item.to_dict(only=("id", "login", "password", "email", "role_id"))
                           for item in self.user_service.get_all()]}

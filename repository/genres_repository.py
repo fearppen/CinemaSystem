@@ -21,4 +21,4 @@ class GenresRepositorySQLAlchemy(IGenresRepository):
 
     def get_genre(self, genre_id: Genre):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Genre).filter(Genre.id == genre_id)
+        return new_db_session.query(Genre).filter(Genre.id == genre_id).first()

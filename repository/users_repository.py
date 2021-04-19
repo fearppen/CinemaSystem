@@ -33,7 +33,7 @@ class UsersRepositorySQLAlchemy(IUsersRepository):
 
     def get_user(self, user_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(User).filter(User.id == user_id)
+        return new_db_session.query(User).filter(User.id == user_id).first()
 
     def add(self, user: User):
         new_db_session = db_session.create_session()

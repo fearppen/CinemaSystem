@@ -33,7 +33,7 @@ class HallsRepositorySQLAlchemy(IHallsRepository):
 
     def get_hall(self, hall_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Hall).filter(Hall.id == hall_id)
+        return new_db_session.query(Hall).filter(Hall.id == hall_id).first()
 
     def add(self, hall: Hall):
         new_db_session = db_session.create_session()

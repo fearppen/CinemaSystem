@@ -33,7 +33,7 @@ class TicketsRepositorySQLAlchemy(ITicketsRepository):
 
     def get_ticket(self, ticket_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Ticket).filter(Ticket.id == ticket_id)
+        return new_db_session.query(Ticket).filter(Ticket.id == ticket_id).first()
 
     def add(self, ticket: Ticket):
         new_db_session = db_session.create_session()

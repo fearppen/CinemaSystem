@@ -33,7 +33,7 @@ class CinemasRepositorySQLAlchemy(ICinemasRepository):
 
     def get_cinema(self, cinema_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Cinema).filter(Cinema.id == cinema_id)
+        return new_db_session.query(Cinema).filter(Cinema.id == cinema_id).first()
 
     def add(self, cinema: Cinema):
         new_db_session = db_session.create_session()

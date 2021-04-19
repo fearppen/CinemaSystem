@@ -33,7 +33,7 @@ class RecordsRepositorySQLAlchemy(IRecordsRepository):
 
     def get_record(self, record_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Record).filter(Record.id == record_id)
+        return new_db_session.query(Record).filter(Record.id == record_id).first()
 
     def add(self, record: Record):
         new_db_session = db_session.create_session()

@@ -1,9 +1,10 @@
 from flask import Flask, render_template, redirect
-from flask_login import LoginManager, login_required, logout_user, login_user
-from werkzeug.security import check_password_hash
+from flask_login import LoginManager, login_required, logout_user
 
 from controllers.cinemas_controller import CinemasListResources
 from controllers.genre_controller import GenreListResources
+from controllers.login_controller import LoginResource
+from controllers.logout_user_controller import LogoutUser
 from controllers.registration_controller import RegistrationResource
 from domain import db_session
 from domain.user import User
@@ -49,14 +50,13 @@ def filter_films(cinema, genre):
 def authorisation():
     form = AuthorisationForm()
     if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.email == form.email.data).first()
-        if user and check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember_me.data)
-            return redirect("/")
-        else:
+        resource = LoginResource()
+        message = resource.login(form)
+        if message:
             return render_template("authorisation.html", name_page="Авторизация",
-                                   type_page="Авторизация", form=form)
+                                   type_page="Авторизация", message=message, form=form)
+        else:
+            return redirect("/")
     return render_template("authorisation.html", type_page="Авторизация",
                            name_page="Авторизация", form=form)
 
@@ -79,7 +79,8 @@ def registration():
 @app.route("/logout")
 @login_required
 def logout():
-    logout_user()
+    resource = LogoutUser()
+    resource.logout()
     return redirect("/")
 
 

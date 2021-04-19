@@ -21,4 +21,4 @@ class RecordTypesRepositorySQLAlchemy(IRecordTypesRepository):
 
     def get_record_type(self, record_type_id: RecordType):
         new_db_session = db_session.create_session()
-        return new_db_session.query(RecordType).filter(RecordType.id == record_type_id)
+        return new_db_session.query(RecordType).filter(RecordType.id == record_type_id).first()

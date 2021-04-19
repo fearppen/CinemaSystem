@@ -33,7 +33,7 @@ class ChairsRepositorySQLAlchemy(IChairsRepository):
 
     def get_chair(self, chair_id: int):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Chair).filter(Chair.id == chair_id)
+        return new_db_session.query(Chair).filter(Chair.id == chair_id).first()
 
     def add(self, chair: Chair):
         new_db_session = db_session.create_session()

@@ -21,4 +21,4 @@ class RolesRepositorySQLAlchemy(IRolesRepository):
 
     def get_role(self, role_id: Role):
         new_db_session = db_session.create_session()
-        return new_db_session.query(Role).filter(Role.id == role_id)
+        return new_db_session.query(Role).filter(Role.id == role_id).first()
