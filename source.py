@@ -2,12 +2,13 @@ from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_required, logout_user, login_user
 from werkzeug.security import check_password_hash
 
-from controllers.login_controller import LoginResource
-from controllers.logout_user_controller import LogoutUser
+from controllers.cinemas_controller import CinemasListResources
+from controllers.genre_controller import GenreListResources
 from controllers.registration_controller import RegistrationResource
 from domain import db_session
 from domain.user import User
 from forms.authorisation_form import AuthorisationForm
+from forms.filter_films import FilterFilmForm
 from forms.registration_form import RegistrationForm
 
 app = Flask(__name__)
@@ -25,7 +26,23 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
-    return render_template("index.html", name_page="Основная")
+    cinemas_resource = CinemasListResources()
+    cinemas = cinemas_resource.get()["cinemas"]
+    genres_resources = GenreListResources()
+    genres = genres_resources.get()["genres"]
+    filter_film_form = FilterFilmForm()
+    filter_film_form.genre.choices = [(genre["id"], genre["title"]) for genre in genres]
+    filter_film_form.cinema.choices = [(cinema["id"], cinema["title"]) for cinema in cinemas]
+    if filter_film_form.validate_on_submit():
+        print(filter_film_form.cinema.data)
+        print(filter_film_form.cinema.data)
+        #return redirect(f"/filter_by/{filter_film_form.cinema.data}, {filter_film_form.cinema.data}")
+    return render_template("index.html", name_page="Основная", filter_film_form=filter_film_form)
+
+
+@app.route("/filter_by/<int:genre>,<int:cinema>", methods=["GET", "POST"])
+def filter_films(cinema, genre):
+    pass
 
 
 @app.route("/authorisation", methods=["GET", "POST"])
@@ -54,7 +71,7 @@ def registration():
             return render_template("registration.html", name_page="Регистрация",
                                    type_page="Регистрация", message=message, form=form)
         else:
-            return render_template("index.html", name_page="Основная")
+            return redirect("/")
     return render_template("registration.html", type_page="Регистрация",
                            name_page="Регистрация", form=form)
 

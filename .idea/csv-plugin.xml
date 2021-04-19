@@ -73,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\seeds\cinemas_seed.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\seeds\films_seed.py">
           <value>
             <Attribute>

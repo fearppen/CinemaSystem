@@ -1,32 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Записи в блоге</h1>
-
-    {% if current_user.is_authenticated and current_user.role_id == 1%}
-        <a href="/news" class="btn btn-warning">
-            Новая новость
-        </a>
-    {% endif %}
-    {% for item in news%}
-        <div class="col-md6 border rounded">
-            <h2>{{item.title}}</h2>
-            <div>
-                {{item.content}}
-            </div>
-            <div>
-                Автор - {{item.user.name}}, Дата написания - {{item.created_date}}
-            </div>
-            {% if current_user.is_authenticated and current_user == item.user %}
-                <div>
-                    <a href="/news/{{ item.id }}" class="btn btn-warning">
-                        Изменить
-                    </a>
-                    <a href="/news_delete/{{ item.id }}" class="btn btn-danger">
-                        Удалить
-                    </a>
+    <div class="container">
+        <form name="filter_films_form" action="" method="post">
+            <div class="row">
+                {{ filter_film_form.csrf_token }}
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_film_form.cinema }}
+                    </div>
                 </div>
-            {% endif %}
-        </div>
-    {% endfor %}
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_film_form.genre }}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_film_form.submit(type="submit", class="btn btn-primary") }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                {{ message }}
+            </div>
+        </form>
+    </div>
 {% endblock %}

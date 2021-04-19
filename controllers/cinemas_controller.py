@@ -7,7 +7,7 @@ class CinemasResource(Resource):
     cinemas_service = CinemasService()
 
     def get(self, cinema_id):
-        return {"cinema": [item.to_dict(only="title")
+        return {"cinema": [item.to_dict(only=("id", "title"))
                            for item in self.cinemas_service.get_cinema(cinema_id)]}
 
     def post(self, cinema):
@@ -27,4 +27,4 @@ class CinemasListResources(Resource):
     cinemas_service = CinemasService()
 
     def get(self):
-        return {"cinemas": [item.to_dict(only="title") for item in self.cinemas_service.get_all()]}
+        return {"cinemas": [item.to_dict(only=("id", "title")) for item in self.cinemas_service.get_all()]}
