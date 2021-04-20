@@ -8,7 +8,7 @@ class FilmResource(Resource):
 
     def get(self, film_id):
         return {"film":
-                    [item.to_dict(only=("title", "release_date", "duration", "director", "genre_id"))
+                    [item.to_dict(only=("id", "title", "release_date", "duration", "director", "genre_id"))
                      for item in self.film_service.get_film(film_id)]}
 
     def post(self, film):
@@ -29,5 +29,5 @@ class FilmListResources(Resource):
 
     def get(self):
         return {"films":
-                    [item.to_dict(only=("title", "release_date", "duration", "director", "genre_id"))
+                    [item.to_dict(only=("id", "title", "release_date", "duration", "director", "genre_id"))
                      for item in self.film_service.get_all()]}

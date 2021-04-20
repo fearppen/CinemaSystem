@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\controllers\film_controller.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\controllers\registration_controller.py">
           <value>
             <Attribute>
@@ -94,7 +101,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\seeds\halls_seed.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\seeds\roles_seed.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\seeds\sessions_seeds.py">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -116,6 +137,13 @@
           </value>
         </entry>
         <entry key="\source.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\templates\base.html">
           <value>
             <Attribute>
               <option name="separator" value="," />

@@ -1,7 +1,8 @@
 from flask import Flask, render_template, redirect
-from flask_login import LoginManager, login_required, logout_user
+from flask_login import LoginManager, login_required
 
 from controllers.cinemas_controller import CinemasListResources
+from controllers.film_controller import FilmListResources
 from controllers.genre_controller import GenreListResources
 from controllers.login_controller import LoginResource
 from controllers.logout_user_controller import LogoutUser
@@ -19,14 +20,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    db_sess = db_session.create_session()
-    return db_sess.query(User).get(user_id)
-
-
-@app.route("/")
-def index():
+def filter_film_form_data():
     cinemas_resource = CinemasListResources()
     cinemas = cinemas_resource.get()["cinemas"]
     genres_resources = GenreListResources()
@@ -34,16 +28,34 @@ def index():
     filter_film_form = FilterFilmForm()
     filter_film_form.genre.choices = [(genre["id"], genre["title"]) for genre in genres]
     filter_film_form.cinema.choices = [(cinema["id"], cinema["title"]) for cinema in cinemas]
+    return filter_film_form
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(User).get(user_id)
+
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    filter_film_form = filter_film_form_data()
     if filter_film_form.validate_on_submit():
-        print(filter_film_form.cinema.data)
-        print(filter_film_form.cinema.data)
-        #return redirect(f"/filter_by/{filter_film_form.cinema.data}, {filter_film_form.cinema.data}")
+        return redirect(
+            f"/filter_by/{int(filter_film_form.cinema.data)},{int(filter_film_form.cinema.data)}")
     return render_template("index.html", name_page="Основная", filter_film_form=filter_film_form)
 
 
-@app.route("/filter_by/<int:genre>,<int:cinema>", methods=["GET", "POST"])
+@app.route("/filter_by/<int:cinema>,<int:genre>", methods=["GET", "POST"])
 def filter_films(cinema, genre):
-    pass
+    resource = FilmListResources()
+    films = resource.get()["films"]
+    filter_film_form = filter_film_form_data()
+    if filter_film_form.validate_on_submit():
+        return redirect(
+            f"/filter_by/{int(filter_film_form.cinema.data)},{int(filter_film_form.cinema.data)}")
+    return render_template("index.html", name_page="Основная",
+                           filter_film_form=filter_film_form, films=films)
 
 
 @app.route("/authorisation", methods=["GET", "POST"])

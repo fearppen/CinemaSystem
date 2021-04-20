@@ -1,29 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
-        <form name="filter_films_form" action="" method="post">
-            <div class="row">
-                {{ filter_film_form.csrf_token }}
-                <div class="col-sm">
-                    <div class="mb-3">
-                        {{ filter_film_form.cinema }}
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="mb-3">
-                        {{ filter_film_form.genre }}
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="mb-3">
-                        {{ filter_film_form.submit(type="submit", class="btn btn-primary") }}
-                    </div>
+<div class="container">
+    <form name="filter_films_form" method="POST">
+        <div class="row">
+            {{ filter_film_form.hidden_tag() }}
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_film_form.cinema }}
                 </div>
             </div>
-            <div class="mb-3">
-                {{ message }}
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_film_form.genre }}
+                </div>
             </div>
-        </form>
-    </div>
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_film_form.submit(type="submit", class="btn btn-primary") }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ message }}
+        </div>
+    </form>
+    {% for film in films%}
+        <div class="col-md6 border rounded">
+            <h2>{{film.title}}</h2>
+            <div>
+                Дата выхода - {{film["release_date"]}}
+            </div>
+            <div>
+                Продолжительность - {{film["duration"]}}
+            </div>
+            <div>
+                Режиссер - {{film["director"]}}
+            </div>
+            <div>
+                Жанр - {{film["genre"]}}
+            </div>
+            {% if current_user.is_authenticated %}
+                <div>
+                    <a href="/buy/{{ film.id }}" class="btn btn-success">
+                        Купить
+                    </a>
+                    <a href="/book/{{ film.id }}" class="btn btn-warning">
+                        Забронировать
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
