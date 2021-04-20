@@ -58,6 +58,16 @@ def filter_films(cinema, genre):
                            filter_film_form=filter_film_form, films=films)
 
 
+@app.route("/buy/<int:film>", methods=["GET", "POST"])
+def buy(film):
+    pass
+
+
+@app.route("/book/<int:film>", methods=["GET", "POST"])
+def book(film):
+    pass
+
+
 @app.route("/authorisation", methods=["GET", "POST"])
 def authorisation():
     form = AuthorisationForm()
