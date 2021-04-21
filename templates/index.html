@@ -27,7 +27,7 @@
     </form>
     {% for film in films%}
         <div class="col-md6 border rounded">
-            <h2>{{film.title}}</h2>
+            <h2><a href="/tickets/{{filter_film_form.cinema}},{{film['id']}}">{{film["title"]}}</a></h2>
             <div>
                 Дата выхода - {{film["release_date"]}}
             </div>
@@ -40,16 +40,42 @@
             <div>
                 Жанр - {{film["genre"]}}
             </div>
-            {% if current_user.is_authenticated %}
-                <div>
-                    <a href="/buy/{{ film.id }}" class="btn btn-success">
-                        Купить билет
-                    </a>
-                    <a href="/book/{{ film.id }}" class="btn btn-warning">
-                        Забронировать билет
-                    </a>
+        </div>
+    {% endfor %}
+    <form name="filter_tickets_form" method="POST">
+        <div class="row">
+            {{ filter_ticket_form.hidden_tag() }}
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_ticket_form.hall }}
                 </div>
-            {% endif %}
+            </div>
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_ticket_form.date }}
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_ticket_form.submit(type="submit", class="btn btn-primary") }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ message }}
+        </div>
+    </form>
+    {% for ticket in tickets%}
+        <div class="col-md6 border rounded">
+            <h2><a href="/ticket/{{ticket['id']}}">{{ticket["number"]}}</a></h2>
+            <div class="row">
+                <div class="col-sm">
+                    {{ticket["time"]}}
+                </div>
+                <div class="col-sm">
+                    {{ticket["cost"]}}
+                </div>
+            </div>
         </div>
     {% endfor %}
 </div>
