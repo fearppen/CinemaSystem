@@ -8,7 +8,7 @@ class UserService:
         return self.users_repository.get_all()
 
     def get_user(self, user_id: int):
-        return self.users_repository.get_user(user_id)
+        return [self.users_repository.get_user(user_id)]
 
     def add(self, user):
         return self.users_repository.add(user)

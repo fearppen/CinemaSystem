@@ -8,7 +8,7 @@ class CinemasService:
         return self.cinemas_service.get_all()
 
     def get_cinema(self, cinema_id):
-        return self.cinemas_service.get_cinema(cinema_id)
+        return [self.cinemas_service.get_cinema(cinema_id)]
 
     def add(self, cinema):
         return self.cinemas_service.add(cinema)

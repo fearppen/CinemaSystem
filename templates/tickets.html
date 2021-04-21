@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <form name="filter_tickets_form" method="POST">
+        <div class="row">
+            {{ filter_ticket_form.hidden_tag() }}
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_ticket_form.hall }}
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_ticket_form.date }}
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="mb-3">
+                    {{ filter_ticket_form.submit(type="submit", class="btn btn-primary") }}
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ message }}
+        </div>
+    </form>
+    {% for ticket in tickets%}
+        <div class="col-md6 border rounded">
+            <h2><a href="/ticket/{{ticket['id']}}">{{ticket["number"]}}</a></h2>
+            <div class="row">
+                <div class="col-sm">
+                    {{ticket["time"]}}
+                </div>
+                <div class="col-sm">
+                    {{ticket["cost"]}}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

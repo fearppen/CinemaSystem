@@ -8,4 +8,4 @@ class RolesService:
         return self.roles_repository.get_all()
 
     def get_role(self, role_id):
-        return self.roles_repository.get_role(role_id)
+        return [self.roles_repository.get_role(role_id)]

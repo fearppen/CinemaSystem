@@ -47,18 +47,18 @@ def index():
     filter_film_form = filter_film_form_data()
     if filter_film_form.validate_on_submit():
         return redirect(
-            f"/filter_by/{int(filter_film_form.cinema.data)},{int(filter_film_form.cinema.data)}")
+            f"/filter_by/{int(filter_film_form.cinema.data)},{int(filter_film_form.genre.data)}")
     return render_template("index.html", name_page="Основная", filter_film_form=filter_film_form)
 
 
 @app.route("/filter_by/<int:cinema>,<int:genre>", methods=["GET", "POST"])
 def filter_films(cinema, genre):
+    filter_film_form = filter_film_form_data()
     resource = SelectFilmResource()
     films = resource.get(cinema, genre)["films"]
-    filter_film_form = filter_film_form_data()
     if filter_film_form.validate_on_submit():
         return redirect(
-            f"/filter_by/{int(filter_film_form.cinema.data)},{int(filter_film_form.cinema.data)}")
+            f"/filter_by/{int(filter_film_form.cinema.data)},{int(filter_film_form.genre.data)}")
     return render_template("index.html", name_page="Фильмы",
                            filter_film_form=filter_film_form, films=films)
 

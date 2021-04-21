@@ -8,7 +8,7 @@ class HallService:
         return self.halls_repository.get_all()
 
     def get_hall(self, hall_id):
-        return self.halls_repository.get_hall(hall_id)
+        return [self.halls_repository.get_hall(hall_id)]
 
     def add(self, hall):
         return self.halls_repository.add(hall)

@@ -8,7 +8,7 @@ class CostService:
         return self.cost_repository.get_all()
 
     def get_cost(self, cost_id):
-        return self.cost_repository.get_cost(cost_id)
+        return [self.cost_repository.get_cost(cost_id)]
 
     def add(self, cost):
         return self.cost_repository.add(cost)

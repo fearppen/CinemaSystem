@@ -1,16 +1,46 @@
-from controllers.film_controller import FilmListResources
-from controllers.genre_controller import GenreResources
+from controllers.film_controller import FilmListResources, FilmResource
 from controllers.hall_controller import HallListResources
+from controllers.hall_session_controller import HallSessionListResources
+from controllers.session_controller import SessionListResources, SessionResource
 
 
 class SelectFilmService:
     hall_resource = HallListResources()
+    films_resource = FilmListResources()
+    film_resource = FilmResource()
+    hall_session_resource = HallSessionListResources()
+    sessions_resource = SessionListResources()
+    session_resource = SessionResource()
 
     def select_film(self, cinema_id, genre_id):
-        all_halls = self.hall_resource.get()
+        all_halls = self.hall_resource.get()["halls"]
+        all_films = self.films_resource.get()["films"]
+        all_sessions = self.sessions_resource.get()["sessions"]
+        halls_sessions = self.hall_session_resource.get()["halls_sessions"]
         halls = []
-        for i in all_halls["halls"]:
-            for j in i:
-                if j["cinema_id"] == cinema_id:
-                    halls.append(j["id"])
+        films = []
+        sessions = []
+        necessary_films = []
 
+        for hall in all_halls:
+            if hall["cinema_id"] == cinema_id:
+                halls.append(hall["id"])
+
+        for film in all_films:
+            if film["genre_id"] == genre_id:
+                films.append(film["id"])
+
+        for session in all_sessions:
+            if session["film_id"] in films:
+                sessions.append(session["id"])
+
+        for hall_session in halls_sessions:
+            for hall_id in halls:
+                if hall_session["hall_id"] == hall_id:
+                    for session_id in sessions:
+                        if hall_session["session_id"] == session_id:
+                            session = self.session_resource.get(session_id)["session"][0]
+                            film = self.film_resource.get(session["film_id"])["film"][0]
+                            necessary_films.append(film)
+
+        return necessary_films

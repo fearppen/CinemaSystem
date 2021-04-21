@@ -8,4 +8,4 @@ class RecordTypeService:
         return self.record_types_repository.get_all()
 
     def get_record_type(self, record_type_id):
-        return self.record_types_repository.get_record_type(record_type_id)
+        return [self.record_types_repository.get_record_type(record_type_id)]

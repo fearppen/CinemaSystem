@@ -8,4 +8,4 @@ class GenreService:
         return self.genres_repository.get_all()
 
     def get_genre(self, genre_id):
-        return self.genres_repository.get_genre(genre_id)
+        return [self.genres_repository.get_genre(genre_id)]

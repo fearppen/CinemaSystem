@@ -8,7 +8,7 @@ class RecordsService:
         return self.records_repository.get_all()
 
     def get_record(self, record_id):
-        return self.records_repository.get_record(record_id)
+        return [self.records_repository.get_record(record_id)]
 
     def add(self, record):
         return self.records_repository.add(record)

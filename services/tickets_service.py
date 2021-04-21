@@ -8,7 +8,7 @@ class TicketService:
         return self.tickets_repository.get_all()
 
     def get_ticket(self, ticket_id):
-        return self.tickets_repository.get_ticket(ticket_id)
+        return [self.tickets_repository.get_ticket(ticket_id)]
 
     def add(self, ticket):
         return self.tickets_repository.add(ticket)

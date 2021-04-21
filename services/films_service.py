@@ -8,7 +8,7 @@ class FilmService:
         return self.films_repository.get_all()
 
     def get_film(self, film_id):
-        return self.films_repository.get_film(film_id)
+        return [self.films_repository.get_film(film_id)]
 
     def add(self, film):
         return self.films_repository.add(film)

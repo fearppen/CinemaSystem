@@ -8,7 +8,7 @@ class SessionService:
         return self.sessions_repository.get_all()
 
     def get_session(self, session_id):
-        return self.sessions_repository.get_session(session_id)
+        return [self.sessions_repository.get_session(session_id)]
 
     def add(self, session):
         return self.sessions_repository.add(session)
