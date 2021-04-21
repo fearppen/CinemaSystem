@@ -42,7 +42,7 @@ class CostsRepositorySQLAlchemy(ICostsRepository):
 
     def update(self, cost_id: int, new_cost: Cost):
         new_db_session = db_session.create_session()
-        cost = new_db_session.query(Cost).filter(Cost.id == cost_id)
+        cost = new_db_session.query(Cost).filter(Cost.id == cost_id).first()
         cost.cost = new_cost.cost
         cost.session_id = new_cost.session_id
         new_db_session.commit()

@@ -42,7 +42,7 @@ class SessionsRepositorySQLAlchemy(ISessionsRepository):
 
     def update(self, session_id: int, new_session: Session):
         new_db_session = db_session.create_session()
-        session = new_db_session.query(Session).filter(Session.id == session_id)
+        session = new_db_session.query(Session).filter(Session.id == session_id).first()
         session.film_id = new_session.film_id
         session.session_datetime = new_session.session_datetime
         new_db_session.commit()

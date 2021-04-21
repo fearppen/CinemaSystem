@@ -42,7 +42,7 @@ class RecordsRepositorySQLAlchemy(IRecordsRepository):
 
     def update(self, record_id: int, new_record: Record):
         new_db_session = db_session.create_session()
-        record = new_db_session.query(Record).filter(Record.id == record_id)
+        record = new_db_session.query(Record).filter(Record.id == record_id).first()
         record.purchase_date = new_record.purchase_date
         record.record_type_id = new_record.record_type_id
         record.ticket_id = new_record.ticket_id

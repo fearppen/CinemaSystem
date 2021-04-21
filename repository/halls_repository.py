@@ -42,7 +42,7 @@ class HallsRepositorySQLAlchemy(IHallsRepository):
 
     def update(self, hall_id: int, new_hall: Hall):
         new_db_session = db_session.create_session()
-        hall = new_db_session.query(Hall).filter(Hall.id == hall_id)
+        hall = new_db_session.query(Hall).filter(Hall.id == hall_id).first()
         hall.title = new_hall.title
         hall.cinema_id = new_hall.cinema_id
         new_db_session.commit()

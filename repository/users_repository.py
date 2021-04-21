@@ -42,7 +42,7 @@ class UsersRepositorySQLAlchemy(IUsersRepository):
 
     def update(self, user_id: int, new_user: User):
         new_db_session = db_session.create_session()
-        user = new_db_session.query(User).filter(User.id == user_id)
+        user = new_db_session.query(User).filter(User.id == user_id).first()
         user.login = new_user.login
         user.password = new_user.password
         user.email = new_user.email

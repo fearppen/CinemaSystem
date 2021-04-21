@@ -42,7 +42,7 @@ class CinemasRepositorySQLAlchemy(ICinemasRepository):
 
     def update(self, cinema_id: int, new_cinema: Cinema):
         new_db_session = db_session.create_session()
-        cinema = new_db_session.query(Cinema).filter(Cinema.id == cinema_id)
+        cinema = new_db_session.query(Cinema).filter(Cinema.id == cinema_id).first()
         cinema.title = new_cinema.title
         new_db_session.commit()
 

@@ -42,7 +42,7 @@ class TicketsRepositorySQLAlchemy(ITicketsRepository):
 
     def update(self, ticket_id: int, new_ticket: Ticket):
         new_db_session = db_session.create_session()
-        ticket = new_db_session.query(Ticket).filter(Ticket.id == ticket_id)
+        ticket = new_db_session.query(Ticket).filter(Ticket.id == ticket_id).first()
         ticket.number = new_ticket.number
         ticket.cost = new_ticket.cost
         ticket.chair_id = new_ticket.chair_id

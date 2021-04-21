@@ -42,7 +42,7 @@ class ChairsRepositorySQLAlchemy(IChairsRepository):
 
     def update(self, chair_id: int, new_chair: Chair):
         new_db_session = db_session.create_session()
-        chair = new_db_session.query(Chair).filter(Chair.id == chair_id)
+        chair = new_db_session.query(Chair).filter(Chair.id == chair_id).first()
         chair.row = new_chair.row
         chair.place = new_chair.place
         chair.hall_id = new_chair.hall_id
