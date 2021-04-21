@@ -7,7 +7,7 @@ class SessionResource(Resource):
     session_service = SessionService()
 
     def get(self, session_id):
-        return {"session": [item.to_dict(only=("session_datetime", "film_id"))
+        return {"session": [item.to_dict(only=("id", "session_datetime", "film_id"))
                             for item in self.session_service.get_session(session_id)]}
 
     def post(self, session):
@@ -27,5 +27,5 @@ class SessionListResources(Resource):
     session_service = SessionService()
 
     def get(self):
-        return {"sessions": [item.to_dict(only=("session_datetime", "film_id"))
+        return {"sessions": [item.to_dict(only=("id", "session_datetime", "film_id"))
                              for item in self.session_service.get_all()]}

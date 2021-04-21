@@ -8,7 +8,7 @@ class RecordResource(Resource):
 
     def get(self, record_id):
         return {"record":
-                    [item.to_dict(only=("purchase_date", "record_type_id", "ticket_id", "user_id"))
+                    [item.to_dict(only=("id", "purchase_date", "record_type_id", "ticket_id", "user_id"))
                      for item in self.record_service.get_record(record_id)]}
 
     def post(self, record):
@@ -29,5 +29,5 @@ class RecordListResources(Resource):
 
     def get(self):
         return {"records":
-                    [item.to_dict(only=("purchase_date", "record_type_id", "ticket_id", "user_id"))
+                    [item.to_dict(only=("id", "purchase_date", "record_type_id", "ticket_id", "user_id"))
                      for item in self.record_service.get_all()]}

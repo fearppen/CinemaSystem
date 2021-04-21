@@ -7,7 +7,7 @@ class HallResource(Resource):
     hall_service = HallService()
 
     def get(self, hall_id):
-        return {"hall": [item.to_dict(only=("title", "cinema_id"))
+        return {"hall": [item.to_dict(only=("id", "title", "cinema_id"))
                          for item in self.hall_service.get_hall(hall_id)]}
 
     def post(self, hall):
@@ -27,5 +27,5 @@ class HallListResources(Resource):
     hall_service = HallService()
 
     def get(self):
-        return {"halls": [item.to_dict(only=("title", "cinema_id"))
+        return {"halls": [item.to_dict(only=("id", "title", "cinema_id"))
                           for item in self.hall_service.get_all()]}
