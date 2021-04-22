@@ -5,26 +5,21 @@ from services.user_service import UserService
 class UserResource(Resource):
     user_service = UserService()
 
-    def get(self, user_id: int):
-        return {"user": [item.to_dict(only=("id", "login", "password", "email", "role_id"))
-                         for item in self.user_service.get_user(user_id)]}
+    def get(self, user_id):
+        return self.user_service.get_user(user_id)
 
     def post(self, user):
-        self.user_service.add(user)
-        return {'success': 'OK'}
+        return self.user_service.add(user)
 
     def put(self, user_id, new_user):
-        self.user_service.update(user_id=user_id, new_user=new_user)
-        return {'success': 'OK'}
+        return self.user_service.update(user_id=user_id, new_user=new_user)
 
     def delete(self, user_id):
-        self.user_service.delete(user_id)
-        return {'success': 'OK'}
+        return self.user_service.delete(user_id)
 
 
 class UsersListResources(Resource):
     user_service = UserService()
 
     def get(self):
-        return {"users": [item.to_dict(only=("id", "login", "password", "email", "role_id"))
-                          for item in self.user_service.get_all()]}
+        return self.user_service.get_all()

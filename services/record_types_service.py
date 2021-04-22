@@ -5,7 +5,12 @@ class RecordTypeService:
     record_types_repository = RecordTypesRepositorySQLAlchemy()
 
     def get_all(self):
-        return self.record_types_repository.get_all()
+        return {"record_types": [item.to_dict(only=("id", "title"))
+                                 for item in self.record_types_repository.get_all()]}
 
     def get_record_type(self, record_type_id):
-        return [self.record_types_repository.get_record_type(record_type_id)]
+        record_type = self.record_types_repository.get_record_type(record_type_id)
+        if record_type:
+            return {"record_type": [item.to_dict(only=("id", "title"))
+                                    for item in [record_type]]}
+        return {"error": "not found"}

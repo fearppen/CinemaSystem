@@ -7,25 +7,20 @@ class SessionResource(Resource):
     session_service = SessionService()
 
     def get(self, session_id):
-        return {"session": [item.to_dict(only=("id", "session_datetime", "film_id"))
-                            for item in self.session_service.get_session(session_id)]}
+        return self.session_service.get_session(session_id)
 
     def post(self, session):
-        self.session_service.add(session)
-        return {'success': 'OK'}
+        return self.session_service.add(session)
 
     def put(self, session_id, session):
-        self.session_service.update(session_id, session)
-        return {'success': 'OK'}
+        return self.session_service.update(session_id, session)
 
     def delete(self, session_id):
-        self.session_service.delete(session_id)
-        return {'success': 'OK'}
+        return self.session_service.delete(session_id)
 
 
 class SessionListResources(Resource):
     session_service = SessionService()
 
     def get(self):
-        return {"sessions": [item.to_dict(only=("id", "session_datetime", "film_id"))
-                             for item in self.session_service.get_all()]}
+        return self.session_service.get_all()

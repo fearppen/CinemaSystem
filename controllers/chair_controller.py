@@ -7,25 +7,20 @@ class ChairResource(Resource):
     chair_service = ChairService()
 
     def get(self, chair_id):
-        return {"chair": [item.to_dict(only=("id", "row", "place", "hall_id"))
-                          for item in self.chair_service.get_chair(chair_id)]}
+        return self.chair_service.get_chair(chair_id)
 
     def post(self, chair):
-        self.chair_service.add(chair)
-        return {'success': 'OK'}
+        return self.chair_service.add(chair)
 
     def put(self, chair_id, chair):
-        self.chair_service.update(chair_id, chair)
-        return {'success': 'OK'}
+        return self.chair_service.update(chair_id, chair)
 
     def delete(self, chair_id):
-        self.chair_service.delete(chair_id)
-        return {'success': 'OK'}
+        return self.chair_service.delete(chair_id)
 
 
 class ChairListResources(Resource):
     chair_service = ChairService()
 
     def get(self):
-        return {"chairs": [item.to_dict(only=("id", "row", "place", "hall_id"))
-                           for item in self.chair_service.get_all()]}
+        return self.chair_service.get_all()
