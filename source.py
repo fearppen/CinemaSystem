@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_required
 
+from api import blueprint
 from controllers.cinemas_controller import CinemasListResources
 from controllers.genre_controller import GenreListResources
 from controllers.login_controller import LoginResource
@@ -127,4 +128,5 @@ def logout():
 
 if __name__ == "__main__":
     db_session.global_init("./db/system.db")
+    app.register_blueprint(blueprint)
     app.run(port=8080, host="localhost")
