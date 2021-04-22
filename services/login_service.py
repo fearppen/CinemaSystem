@@ -16,7 +16,7 @@ def is_this_user_in_bd(all_users: dict, form: AuthorisationForm, email, password
                 if flag and key == "password":
                     if check_password_hash(value, password.data):
                         resource = UserService()
-                        user = resource.get_user(i["id"])
+                        user = resource.get_user(i["id"])[0]
                         login_user(user, remember=form.remember_me.data)
                         return ""
                     else:
