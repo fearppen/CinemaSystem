@@ -157,7 +157,7 @@ def create_cost():
     return jsonify(cost_resource.post(check_request_cost(request.json)))
 
 
-@blueprint.route("/api/cost/<int:cost_id", methods=["PUT"])
+@blueprint.route("/api/cost/<int:cost_id>", methods=["PUT"])
 def edit_cost(cost_id):
     return jsonify(cost_resource.put(cost_id, check_request_cost(request.json)))
 
@@ -182,7 +182,7 @@ def create_film():
     return jsonify(film_resource.post(check_request_film(request.json)))
 
 
-@blueprint.route("/api/film/<int:film_id", methods=["PUT"])
+@blueprint.route("/api/film/<int:film_id>", methods=["PUT"])
 def edit_film(film_id):
     return jsonify(film_resource.put(film_id, check_request_film(request.json)))
 
@@ -207,7 +207,7 @@ def create_genre():
     return jsonify(genre_resource.post(check_request_genre(request.json)))
 
 
-@blueprint.route("/api/genre/<int:genre_id", methods=["PUT"])
+@blueprint.route("/api/genre/<int:genre_id>", methods=["PUT"])
 def edit_genre(genre_id):
     return jsonify(genre_resource.put(genre_id, check_request_genre(request.json)))
 
