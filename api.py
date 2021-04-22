@@ -102,17 +102,17 @@ def get_one_chair(chair_id):
     return jsonify(chair_resource.get(chair_id))
 
 
-@blueprint.route("api/chair", methods=["POST"])
+@blueprint.route("/api/chair", methods=["POST"])
 def create_chair():
     return jsonify(chair_resource.post(check_request_chair(request.json)))
 
 
-@blueprint.route("api/chair/<int:chair_id>", methods=["PUT"])
+@blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
 def edit_chair(chair_id):
     return jsonify(chair_resource.put(chair_id, check_request_chair(request.json)))
 
 
-@blueprint.route("api/chair/<int:chair_id>", methods=["DELETE"])
+@blueprint.route("/api/chair/<int:chair_id>", methods=["DELETE"])
 def delete_chair(chair_id):
     return jsonify(chair_resource.delete(chair_id))
 
@@ -127,17 +127,17 @@ def get_one_cinema(cinema_id):
     return jsonify(cinema_resource.get(cinema_id))
 
 
-@blueprint.route("api/cinema", methods=["POST"])
+@blueprint.route("/api/cinema", methods=["POST"])
 def create_cinema():
     return jsonify(cinema_resource.post(check_request_cinema(request.json)))
 
 
-@blueprint.route("api/cinema/<int:cinema_id>", methods=["PUT"])
+@blueprint.route("/api/cinema/<int:cinema_id>", methods=["PUT"])
 def edit_cinema(cinema_id):
     return jsonify(cinema_resource.put(cinema_id, check_request_cinema(request.json)))
 
 
-@blueprint.route("api/cinema/<int:cinema_id>", methods=["DELETE"])
+@blueprint.route("/api/cinema/<int:cinema_id>", methods=["DELETE"])
 def delete_cinema(cinema_id):
     return jsonify(cinema_resource.delete(cinema_id))
 
@@ -152,17 +152,17 @@ def get_one_cost(cost_id):
     return jsonify(cost_resource.get(cost_id))
 
 
-@blueprint.route("api/cost", methods=["POST"])
+@blueprint.route("/api/cost", methods=["POST"])
 def create_cost():
     return jsonify(cost_resource.post(check_request_cost(request.json)))
 
 
-@blueprint.route("api/cost/<int:cost_id", methods=["PUT"])
+@blueprint.route("/api/cost/<int:cost_id", methods=["PUT"])
 def edit_cost(cost_id):
     return jsonify(cost_resource.put(cost_id, check_request_cost(request.json)))
 
 
-@blueprint.route("api/cost/<int:cost_id>", methods=["DELETE"])
+@blueprint.route("/api/cost/<int:cost_id>", methods=["DELETE"])
 def delete_cost(cost_id):
     return jsonify(cost_resource.delete(cost_id))
 
@@ -177,17 +177,17 @@ def get_one_film(film_id):
     return jsonify(film_resource.get(film_id))
 
 
-@blueprint.route("api/film", methods=["POST"])
+@blueprint.route("/api/film", methods=["POST"])
 def create_film():
     return jsonify(film_resource.post(check_request_film(request.json)))
 
 
-@blueprint.route("api/film/<int:film_id", methods=["PUT"])
+@blueprint.route("/api/film/<int:film_id", methods=["PUT"])
 def edit_film(film_id):
     return jsonify(film_resource.put(film_id, check_request_film(request.json)))
 
 
-@blueprint.route("api/film/<int:film_id>", methods=["DELETE"])
+@blueprint.route("/api/film/<int:film_id>", methods=["DELETE"])
 def delete_film(film_id):
     return jsonify(film_resource.delete(film_id))
 
@@ -202,16 +202,16 @@ def get_one_film(genre_id):
     return jsonify(genre_id)
 
 
-@blueprint.route("api/genre", methods=["POST"])
+@blueprint.route("/api/genre", methods=["POST"])
 def create_genre():
     return jsonify(genre_resource.post(check_request_genre(request.json)))
 
 
-@blueprint.route("api/genre/<int:genre_id", methods=["PUT"])
+@blueprint.route("/api/genre/<int:genre_id", methods=["PUT"])
 def edit_genre(genre_id):
     return jsonify(genre_resource.put(genre_id, check_request_genre(request.json)))
 
 
-@blueprint.route("api/genre/<int:genre_id>", methods=["DELETE"])
+@blueprint.route("/api/genre/<int:genre_id>", methods=["DELETE"])
 def delete_genre(genre_id):
     return jsonify(genre_resource.delete(genre_id))
