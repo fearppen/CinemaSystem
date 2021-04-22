@@ -1,17 +1,20 @@
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_required
 
-from api import blueprint
 from controllers.cinemas_controller import CinemasListResources
 from controllers.genre_controller import GenreListResources
+from controllers.hall_controller import HallResource
 from controllers.login_controller import LoginResource
 from controllers.logout_user_controller import LogoutUser
 from controllers.registration_controller import RegistrationResource
 from controllers.select_film_by_genre_and_cinema_controller import SelectFilmResource
+from controllers.select_ticket_controller import SelectTicketResource
+from controllers.session_controller import SessionResource
 from domain import db_session
 from domain.user import User
 from forms.authorisation_form import AuthorisationForm
 from forms.filter_films_form import FilterFilmForm
+from forms.filter_tickets_form import FilterTicketForm
 from forms.registration_form import RegistrationForm
 
 app = Flask(__name__)
@@ -32,9 +35,17 @@ def filter_film_form_data():
     return filter_film_form
 
 
-# TODO: доделать
-def filter_ticket_form_data():
-    pass
+def filter_ticket_form_data(halls: str, sessions: str):
+    halls_resource = HallResource()
+    halls = [halls_resource.get(int(hall_id))["hall"][0] for hall_id in halls.split(",")]
+    sessions_resource = SessionResource()
+    sessions = [sessions_resource.get(int(session_id))["session"][0]
+                for session_id in sessions.split(",")]
+    filter_ticket_form = FilterTicketForm()
+    filter_ticket_form.hall.choices = [(hall["id"], hall["title"]) for hall in halls]
+    filter_ticket_form.date.choices = [(session["id"], session["session_datetime"].split()[0])
+                                       for session in sessions]
+    return filter_ticket_form
 
 
 @login_manager.user_loader
@@ -64,10 +75,21 @@ def filter_films(cinema, genre):
                            filter_film_form=filter_film_form, films=films)
 
 
+@app.route("/tickets_index/<string:halls>,<string:sessions>", methods=["GET", "POST"])
+def tickets_index(halls, sessions):
+    filter_ticket_form = filter_ticket_form_data(halls, sessions)
+    if filter_ticket_form.validate_on_submit():
+        return redirect(f"""/filter_tickets/{int(filter_ticket_form.hall.data)},
+        {int(filter_ticket_form.date.data)}""")
+    return render_template("index.html", name_page="Билеты",
+                           filter_ticket_form=filter_ticket_form)
+
+
 # TODO: доделать
-@app.route("/tickets/<int:cinema>,<int:film>", methods=["GET", "POST"])
-def tickets(cinema, film):
-    pass
+@app.route("/filter_tickets/<int:hall>,<int:session>", methods=["GET", "POST"])
+def filter_tickets(hall, session):
+    resource = SelectTicketResource()
+    tickets = resource.get(hall, session)["tickets"]
 
 
 # TODO: доделать
@@ -128,5 +150,5 @@ def logout():
 
 if __name__ == "__main__":
     db_session.global_init("./db/system.db")
-    app.register_blueprint(blueprint)
+    # app.register_blueprint(blueprint)
     app.run(port=8080, host="localhost")

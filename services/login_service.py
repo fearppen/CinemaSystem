@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash
 
 from forms.authorisation_form import AuthorisationForm
 from controllers.users_controller import UsersListResources
-from services.user_service import UserService
+from repository.users_repository import UsersRepositorySQLAlchemy
 
 
 def is_this_user_in_bd(all_users: dict, form: AuthorisationForm, email, password):
@@ -15,8 +15,8 @@ def is_this_user_in_bd(all_users: dict, form: AuthorisationForm, email, password
                     flag = True
                 if flag and key == "password":
                     if check_password_hash(value, password.data):
-                        resource = UserService()
-                        user = resource.get_user(i["id"])[0]
+                        resource = UsersRepositorySQLAlchemy()
+                        user = resource.get_user(i["id"])
                         login_user(user, remember=form.remember_me.data)
                         return ""
                     else:

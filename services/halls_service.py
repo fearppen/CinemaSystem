@@ -5,7 +5,8 @@ class HallService:
     halls_repository = HallsRepositorySQLAlchemy()
 
     def get_all(self):
-        return self.halls_repository.get_all()
+        return {"halls": [item.to_dict(only=("id", "title", "cinema_id"))
+                          for item in self.halls_repository.get_all()]}
 
     def get_hall(self, hall_id):
         hall = self.halls_repository.get_hall(hall_id)

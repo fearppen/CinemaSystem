@@ -2,47 +2,87 @@
 
 {% block content %}
 <div class="container">
-    <form name="filter_films_form" method="POST">
-        <div class="row">
-            {{ filter_film_form.hidden_tag() }}
-            <div class="col-sm">
-                <div class="mb-3">
-                    {{ filter_film_form.cinema }}
+    {% if filter_film_form %}
+        <form name="filter_films_form" method="POST">
+            <div class="row">
+                {{ filter_film_form.hidden_tag() }}
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_film_form.cinema }}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_film_form.genre }}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_film_form.submit(type="submit", class="btn btn-primary") }}
+                    </div>
                 </div>
             </div>
-            <div class="col-sm">
-                <div class="mb-3">
-                    {{ filter_film_form.genre }}
+            <div class="mb-3">
+                {{ message }}
+            </div>
+        </form>
+        {% for film in films%}
+            <div class="col-md6 border rounded">
+                <h2>{{film["title"]}}</h2>
+                <div>
+                    Дата выхода - {{film["release_date"]}}
+                </div>
+                <div>
+                    Продолжительность - {{film["duration"]}}
+                </div>
+                <div>
+                    Режиссер - {{film["director"]}}
+                </div>
+                <div>
+                    <a href="/tickets_index/{{film['halls_id']}},{{film['sessions_id']}}" class="btn btn-success">
+                        Просмотреть билеты
+                    </a>
                 </div>
             </div>
-            <div class="col-sm">
-                <div class="mb-3">
-                    {{ filter_film_form.submit(type="submit", class="btn btn-primary") }}
+        {% endfor %}
+    {% endif %}
+    {% if filter_ticket_form %}
+        <form name="filter_tickets_form" method="POST">
+            <div class="row">
+                {{ filter_ticket_form.hidden_tag() }}
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_ticket_form.hall }}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_ticket_form.date }}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        {{ filter_ticket_form.submit(type="submit", class="btn btn-primary") }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="mb-3">
-            {{ message }}
-        </div>
-    </form>
-    {% for film in films%}
-        <div class="col-md6 border rounded">
-            <h2>{{film["title"]}}</h2>
-            <div>
-                Дата выхода - {{film["release_date"]}}
+            <div class="mb-3">
+                {{ message }}
             </div>
-            <div>
-                Продолжительность - {{film["duration"]}}
+        </form>
+        {% for ticket in tickets%}
+            <div class="col-md6 border rounded">
+                <h2><a href="/ticket/{{ticket['id']}}">{{ticket["number"]}}</a></h2>
+                <div class="row">
+                    <div class="col-sm">
+                        {{ticket["time"]}}
+                    </div>
+                    <div class="col-sm">
+                        {{ticket["cost"]}}
+                    </div>
+                </div>
             </div>
-            <div>
-                Режиссер - {{film["director"]}}
-            </div>
-            <div>
-                <a href="/tickets/{{film['id']}}" class="btn btn-success">
-                    Просмотреть билеты
-                </a>
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

@@ -10,18 +10,18 @@ class HallSessionResource(Resource):
 
     def get(self, hall_id):
         return {"hall_sessions": [item.to_dict(only=("hall_id", "session_id"))
-                                  for item in self.hall_service.get_hall(hall_id)]}
+                                  for item in self.hall_session_service.get_hall_sessions(hall_id)]}
 
     def post(self, hall: Hall, session: Session):
-        self.hall_service.add(hall, session)
+        self.hall_session_service.add(hall, session)
         return {'success': 'OK'}
 
     def put(self, hall: Hall, session: Session, new_session: Session):
-        self.hall_service.update(hall, session, new_session)
+        self.hall_session_service.update(hall, session, new_session)
         return {'success': 'OK'}
 
     def delete(self, hall: Hall, session: Session):
-        self.hall_service.delete(hall, session)
+        self.hall_session_service.delete(hall, session)
         return {'success': 'OK'}
 
 

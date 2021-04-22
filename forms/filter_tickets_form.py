@@ -3,6 +3,6 @@ from wtforms import SelectField, SubmitField
 
 
 class FilterTicketForm(FlaskForm):
-    halls = SelectField("Залы", choices=[])
+    hall = SelectField("Залы", choices=[])
     date = SelectField("День", choices=[])
     submit = SubmitField('Показать')
