@@ -10,6 +10,7 @@ from controllers.genre_controller import GenreListResources
 from controllers.hall_controller import HallResource
 from controllers.login_controller import LoginResource
 from controllers.logout_user_controller import LogoutUser
+from controllers.personal_area_controller import PersonalAreaResource
 from controllers.registration_controller import RegistrationResource
 from controllers.select_film_by_genre_and_cinema_controller import SelectFilmResource
 from controllers.select_ticket_controller import SelectTicketResource
@@ -87,7 +88,8 @@ def tickets_index(halls, sessions):
     global filter_ticket_form, url_tickets
     filter_ticket_form = filter_ticket_form_data(halls, sessions)
     if filter_ticket_form.validate_on_submit():
-        url_tickets = f"""/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}"""
+        hall, date = int(filter_ticket_form.hall.data), int(filter_ticket_form.date.data)
+        url_tickets = f"/filter_tickets/{hall},{date}"
         return redirect(url_tickets)
     return render_template("index.html", name_page="Билеты",
                            filter_ticket_form=filter_ticket_form)
@@ -99,7 +101,8 @@ def filter_tickets(hall, session):
     resource = SelectTicketResource()
     tickets = resource.get(hall, session)["tickets"]
     if filter_ticket_form.validate_on_submit():
-        url_tickets = f"""/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}"""
+        hall, date = int(filter_ticket_form.hall.data), int(filter_ticket_form.date.data)
+        url_tickets = f"/filter_tickets/{hall},{date}"
         return redirect(url_tickets)
     return render_template("index.html", name_page="Билеты",
                            filter_ticket_form=filter_ticket_form, tickets=tickets)
@@ -116,6 +119,14 @@ def book(ticket):
     resource = BookResource()
     resource.book(ticket)
     return redirect(url_tickets)
+
+
+@app.route("/personal_area", methods=["GET", "POST"])
+def personal_area():
+    resource = PersonalAreaResource()
+    tickets = resource.get_user_tickets()
+    print(tickets)
+    return render_template("index.html", name_page="Кабинет", user_tickets=tickets)
 
 
 @app.route("/authorisation", methods=["GET", "POST"])
@@ -159,5 +170,6 @@ def logout():
 if __name__ == "__main__":
     db_session.global_init("./db/system.db")
     app.register_blueprint(blueprint)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(port=port, host="0.0.0.0")
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(port=port, host="0.0.0.0")
+    app.run(host="localhost", port=8000)

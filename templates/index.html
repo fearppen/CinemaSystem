@@ -106,5 +106,31 @@
             </tbody>
         </table>
     {% endif %}
+    {% if user_tickets %}
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Номер</th>
+                  <th scope="col">Цена</th>
+                  <th scope="col">Ряд</th>
+                  <th scope="col">Место</th>
+                  <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in user_tickets%}
+                    <tr>
+                      <th scope="row">{{loop.index}}</th>
+                      <td>{{ticket["number"]}}</td>
+                      <td>{{ticket["cost"]}}</td>
+                      <td>{{ticket["row"]}}</td>
+                      <td>{{ticket["place"]}}</td>
+                      <td>{{ticket["operation"]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 </div>
 {% endblock %}

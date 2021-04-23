@@ -157,6 +157,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\services\personal_area_service.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\services\record_types_service.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\services\select_ticket_service.py">
           <value>
             <Attribute>

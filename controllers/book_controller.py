@@ -5,4 +5,4 @@ class BookResource:
     book_service = BookService()
 
     def book(self, ticket_id: int):
-        return self.book_service.book(ticket_id)
+        self.book_service.book(ticket_id)

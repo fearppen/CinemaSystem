@@ -11,6 +11,5 @@ class RecordTypeService:
     def get_record_type(self, record_type_id):
         record_type = self.record_types_repository.get_record_type(record_type_id)
         if record_type:
-            return {"record_type": [item.to_dict(only=("id", "title"))
-                                    for item in [record_type]]}
+            return {"record_type": [{"id": record_type.id, "title": record_type.title}]}
         return {"error": "not found"}
