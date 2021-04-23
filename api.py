@@ -434,7 +434,7 @@ def edit_session(session_id):
 
 
 @blueprint.route("/api/session/<int:session_id>", methods=["DELETE"])
-def delete_record(session_id):
+def delete_session(session_id):
     return jsonify(session_resource.delete(session_id))
 
 
