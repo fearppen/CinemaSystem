@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_required
 
 from api import blueprint
+from controllers.book_controller import BookResource
 from controllers.cinemas_controller import CinemasListResources
 from controllers.genre_controller import GenreListResources
 from controllers.hall_controller import HallResource
@@ -25,6 +26,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 filter_ticket_form = None
+url_tickets = ""
 
 
 def filter_film_form_data():
@@ -80,22 +82,23 @@ def filter_films(cinema, genre):
 
 @app.route("/tickets_index/<string:halls>,<string:sessions>", methods=["GET", "POST"])
 def tickets_index(halls, sessions):
-    global filter_ticket_form
+    global filter_ticket_form, url_tickets
     filter_ticket_form = filter_ticket_form_data(halls, sessions)
     if filter_ticket_form.validate_on_submit():
-        return redirect(
-            f"/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}")
+        url_tickets = f"""/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}"""
+        return redirect(url_tickets)
     return render_template("index.html", name_page="Билеты",
                            filter_ticket_form=filter_ticket_form)
 
 
 @app.route("/filter_tickets/<int:hall>,<int:session>", methods=["GET", "POST"])
 def filter_tickets(hall, session):
-    global filter_ticket_form
+    global filter_ticket_form, url_tickets
     resource = SelectTicketResource()
     tickets = resource.get(hall, session)["tickets"]
     if filter_ticket_form.validate_on_submit():
-        return redirect(f"""/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}""")
+        url_tickets = f"""/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}"""
+        return redirect(url_tickets)
     return render_template("index.html", name_page="Билеты",
                            filter_ticket_form=filter_ticket_form, tickets=tickets)
 
@@ -106,10 +109,11 @@ def buy(ticket):
     pass
 
 
-# TODO: доделать
 @app.route("/book/<int:ticket>", methods=["GET", "POST"])
 def book(ticket):
-    pass
+    resource = BookResource()
+    resource.book(ticket)
+    return redirect(url_tickets)
 
 
 @app.route("/authorisation", methods=["GET", "POST"])
