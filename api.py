@@ -204,9 +204,9 @@ def get_one_chair(chair_id):
 @blueprint.route("/api/chair", methods=["POST"])
 def create_chair():
     try:
-        return jsonify(chair_resource.post(check_request_chair(request)))
+        return jsonify(chair_resource.post(check_request_chair(request.json())))
     except:
-        return jsonify(check_request_chair(request))
+        return jsonify(check_request_chair(request.json()))
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
