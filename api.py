@@ -204,17 +204,17 @@ def get_one_chair(chair_id):
 @blueprint.route("/api/chair", methods=["POST"])
 def create_chair():
     try:
-        return jsonify(chair_resource.post(check_request_chair(request.json)))
+        return jsonify(chair_resource.post(check_request_chair(request)))
     except:
-        return jsonify(check_request_chair(request.json))
+        return jsonify(check_request_chair(request))
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
 def edit_chair(chair_id):
     try:
-        return jsonify(chair_resource.put(chair_id, check_request_chair(request.json)))
+        return jsonify(chair_resource.put(chair_id, check_request_chair(request)))
     except:
-        return jsonify(check_request_chair(request.json))
+        return jsonify(check_request_chair(request))
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["DELETE"])
