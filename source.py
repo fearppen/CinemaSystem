@@ -94,8 +94,7 @@ def filter_tickets(hall, session):
     resource = SelectTicketResource()
     tickets = resource.get(hall, session)["tickets"]
     if filter_ticket_form.validate_on_submit():
-        return redirect(f"""/filter_tickets/{int(filter_ticket_form.hall.data)},
-        {int(filter_ticket_form.date.data)}""")
+        return redirect(f"""/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}""")
     return render_template("index.html", name_page="Билеты",
                            filter_ticket_form=filter_ticket_form, tickets=tickets)
 
