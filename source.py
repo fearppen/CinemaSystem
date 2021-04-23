@@ -131,7 +131,6 @@ def book(ticket):
 def personal_area():
     resource = PersonalAreaResource()
     tickets = resource.get_user_tickets()
-    print(tickets)
     return render_template("index.html", name_page="Кабинет", user_tickets=tickets)
 
 
