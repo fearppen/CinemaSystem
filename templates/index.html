@@ -70,19 +70,41 @@
                 {{ message }}
             </div>
         </form>
-        {% for ticket in tickets%}
-            <div class="col-md6 border rounded">
-                <h2><a href="/ticket/{{ticket['id']}}">{{ticket["number"]}}</a></h2>
-                <div class="row">
-                    <div class="col-sm">
-                        {{ticket["time"]}}
-                    </div>
-                    <div class="col-sm">
-                        {{ticket["cost"]}}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Номер</th>
+                  <th scope="col">Цена</th>
+                  <th scope="col">Ряд</th>
+                  <th scope="col">Место</th>
+                  <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets%}
+                    <tr>
+                      <th scope="row">loop.index</th>
+                      <td><a href="/ticket/{{ticket['id']}}">{{ticket["number"]}}</a></td>
+                      <td>{{ticket["cost"]}}</td>
+                      <td>{{ticket["row"]}}</td>
+                      <td>{{ticket["place"]}}</td>
+                      <td>
+                        {% if current_user.is_authenticated %}
+                            <div>
+                                <a href="/buy/{{ ticket['id'] }}" class="btn btn-success">
+                                    Купить билет
+                                </a>
+                                <a href="/book/{{ ticket['id'] }}" class="btn btn-warning">
+                                    Забронировать билет
+                                </a>
+                            </div>
+                        {% endif %}
+                      </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 </div>
 {% endblock %}

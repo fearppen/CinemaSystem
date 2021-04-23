@@ -1,57 +1,26 @@
-from controllers.film_controller import FilmListResources, FilmResource
-from controllers.hall_controller import HallListResources
-from controllers.hall_session_controller import HallSessionListResources
-from controllers.session_controller import SessionListResources, SessionResource
+from controllers.chair_controller import ChairResource
+from controllers.record_controller import RecordListResources
+from controllers.session_controller import SessionResource
+from controllers.ticket_controller import TicketsListResources
 
 
 class SelectTicketService:
-    hall_resource = HallListResources()
-    films_resource = FilmListResources()
-    film_resource = FilmResource()
-    hall_session_resource = HallSessionListResources()
-    sessions_resource = SessionListResources()
+    ticket_resource = TicketsListResources()
+    chair_resource = ChairResource()
     session_resource = SessionResource()
+    record_resource = RecordListResources()
 
     def select_ticket(self, hall_id, session_id):
-        all_halls = self.hall_resource.get()["halls"]
-        all_films = self.films_resource.get()["films"]
-        all_sessions = self.sessions_resource.get()["sessions"]
-        halls_sessions = self.hall_session_resource.get()["halls_sessions"]
-        halls = []
-        films = []
-        sessions = []
-        necessary_films = []
-
-        for hall in all_halls:
-            if hall["cinema_id"] == cinema_id:
-                halls.append(hall["id"])
-
-        for film in all_films:
-            if film["genre_id"] == genre_id:
-                films.append(film["id"])
-
-        for session in all_sessions:
-            if session["film_id"] in films:
-                sessions.append(session["id"])
-
-        for hall_session in halls_sessions:
-            for hall_id in halls:
-                if hall_session["hall_id"] == hall_id:
-                    for session_id in sessions:
-                        if hall_session["session_id"] == session_id:
-                            session = self.session_resource.get(session_id)["session"][0]
-                            film = self.film_resource.get(session["film_id"])["film"][0]
-                            if film["id"] not in [i["id"] for i in necessary_films]:
-                                film.setdefault("halls_id", "")
-                                film.setdefault("sessions_id", "")
-                                film["sessions_id"] += f"{session_id}"
-                                film["halls_id"] += f"{hall_id}"
-                                necessary_films.append(film)
-                            else:
-                                film = list(filter(lambda x: x["id"] == "film_id",
-                                                   necessary_films))[0]
-                                index = necessary_films.index(film)
-                                necessary_films[index]["sessions_id"] += f",{session_id}"
-                                necessary_films[index]["halls_id"] += f",{hall_id}"
-
-        return necessary_films
+        busy_tickets = [record["ticket_id"] for record in self.record_resource.get()["records"]]
+        tickets = list(filter(lambda ticket:
+                              self.chair_resource.get(
+                                  ticket["chair_id"])["chair"][0]["hall_id"] == hall_id
+                              and ticket["id"] not in busy_tickets,
+                              [ticket for ticket in self.ticket_resource.get()["tickets"]
+                               if ticket["session_id"] == session_id]))
+        for ticket in tickets:
+            chair = self.chair_resource.get(ticket["chair_id"])["chair"][0]
+            ticket["row"] = chair["row"]
+            ticket["place"] = chair["place"]
+        tickets.sort(key=lambda x: (x["row"], x["place"]))
+        return tickets

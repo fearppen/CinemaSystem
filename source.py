@@ -23,6 +23,8 @@ app.config["SECRET_KEY"] = "yandex_lyceum_secret_key"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+filter_ticket_form = None
+
 
 def filter_film_form_data():
     cinemas_resource = CinemasListResources()
@@ -39,11 +41,11 @@ def filter_ticket_form_data(halls: str, sessions: str):
     halls_resource = HallResource()
     halls = [halls_resource.get(int(hall_id))["hall"][0] for hall_id in halls.split(",")]
     sessions_resource = SessionResource()
-    sessions = [sessions_resource.get(int(session_id))["session"][0]
-                for session_id in sessions.split(",")]
+    sessions = sorted([sessions_resource.get(int(session_id))["session"][0]
+                       for session_id in sessions.split(",")], key=lambda x: x["session_datetime"])
     filter_ticket_form = FilterTicketForm()
     filter_ticket_form.hall.choices = [(hall["id"], hall["title"]) for hall in halls]
-    filter_ticket_form.date.choices = [(session["id"], session["session_datetime"].split()[0])
+    filter_ticket_form.date.choices = [(session["id"], session["session_datetime"])
                                        for session in sessions]
     return filter_ticket_form
 
@@ -77,19 +79,25 @@ def filter_films(cinema, genre):
 
 @app.route("/tickets_index/<string:halls>,<string:sessions>", methods=["GET", "POST"])
 def tickets_index(halls, sessions):
+    global filter_ticket_form
     filter_ticket_form = filter_ticket_form_data(halls, sessions)
     if filter_ticket_form.validate_on_submit():
-        return redirect(f"""/filter_tickets/{int(filter_ticket_form.hall.data)},
-        {int(filter_ticket_form.date.data)}""")
+        return redirect(
+            f"/filter_tickets/{int(filter_ticket_form.hall.data)},{int(filter_ticket_form.date.data)}")
     return render_template("index.html", name_page="Билеты",
                            filter_ticket_form=filter_ticket_form)
 
 
-# TODO: доделать
 @app.route("/filter_tickets/<int:hall>,<int:session>", methods=["GET", "POST"])
 def filter_tickets(hall, session):
+    global filter_ticket_form
     resource = SelectTicketResource()
     tickets = resource.get(hall, session)["tickets"]
+    if filter_ticket_form.validate_on_submit():
+        return redirect(f"""/filter_tickets/{int(filter_ticket_form.hall.data)},
+        {int(filter_ticket_form.date.data)}""")
+    return render_template("index.html", name_page="Билеты",
+                           filter_ticket_form=filter_ticket_form, tickets=tickets)
 
 
 # TODO: доделать
@@ -99,14 +107,14 @@ def ticket(ticket):
 
 
 # TODO: доделать
-@app.route("/buy/<int:film>", methods=["GET", "POST"])
-def buy(film):
+@app.route("/buy/<int:ticket>", methods=["GET", "POST"])
+def buy(ticket):
     pass
 
 
 # TODO: доделать
-@app.route("/book/<int:film>", methods=["GET", "POST"])
-def book(film):
+@app.route("/book/<int:ticket>", methods=["GET", "POST"])
+def book(ticket):
     pass
 
 
