@@ -100,12 +100,6 @@ def filter_tickets(hall, session):
 
 
 # TODO: доделать
-@app.route("/ticket/<int:ticket>", methods=["GET", "POST"])
-def ticket(ticket):
-    pass
-
-
-# TODO: доделать
 @app.route("/buy/<int:ticket>", methods=["GET", "POST"])
 def buy(ticket):
     pass
