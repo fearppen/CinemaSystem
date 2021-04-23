@@ -170,6 +170,5 @@ def logout():
 if __name__ == "__main__":
     db_session.global_init("./db/system.db")
     app.register_blueprint(blueprint)
-    # port = int(os.environ.get("PORT", 5000))
-    # app.run(port=port, host="0.0.0.0")
-    app.run(host="localhost", port=8000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(port=port, host="0.0.0.0")

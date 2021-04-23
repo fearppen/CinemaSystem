@@ -18,7 +18,7 @@
                 {% if current_user.is_authenticated %}
                     <p>
                         <a class="btn btn-light" href="/personal_area">Личный кабинет</a>
-                        <a class="btn btn-light" href="/logout">{{ current_user.login }}</a>
+                        <a class="btn btn-danger" href="/logout">Выйти</a>
                     </p>
                 {% else %}
                     <p>
