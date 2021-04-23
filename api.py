@@ -54,16 +54,16 @@ user_list_resource = UsersListResources()
 
 
 def check_request_chair(req):
-    if not req.args:
+    if not req:
         return jsonify({"error": "Empty request"})
-    elif not all(key in req.args for key in
+    elif not all(key in req for key in
                  ["row", "place", "hall_id"]):
         return jsonify({"error": "Bad request"})
     else:
         chair = Chair()
-        chair.row = req.args["row"]
-        chair.place = req.args["place"]
-        chair.hall_id = req.args["hall_id"]
+        chair.row = req["row"]
+        chair.place = req["place"]
+        chair.hall_id = req["hall_id"]
         return chair
 
 
@@ -204,9 +204,9 @@ def get_one_chair(chair_id):
 @blueprint.route("/api/chair", methods=["POST"])
 def create_chair():
     try:
-        return jsonify(chair_resource.post(check_request_chair(request)))
+        return jsonify(chair_resource.post(check_request_chair(request.data)))
     except:
-        return jsonify(check_request_chair(request))
+        return jsonify(check_request_chair(request.data))
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
