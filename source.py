@@ -5,6 +5,7 @@ from flask_login import LoginManager, login_required
 
 from api import blueprint
 from controllers.book_controller import BookResource
+from controllers.buy_controller import BuyResource
 from controllers.cinemas_controller import CinemasListResources
 from controllers.genre_controller import GenreListResources
 from controllers.hall_controller import HallResource
@@ -18,6 +19,7 @@ from controllers.session_controller import SessionResource
 from domain import db_session
 from domain.user import User
 from forms.authorisation_form import AuthorisationForm
+from forms.buy_form import BuyForm
 from forms.filter_films_form import FilterFilmForm
 from forms.filter_tickets_form import FilterTicketForm
 from forms.registration_form import RegistrationForm
@@ -108,10 +110,14 @@ def filter_tickets(hall, session):
                            filter_ticket_form=filter_ticket_form, tickets=tickets)
 
 
-# TODO: доделать
 @app.route("/buy/<int:ticket>", methods=["GET", "POST"])
 def buy(ticket):
-    pass
+    form = BuyForm()
+    if form.validate_on_submit():
+        resource = BuyResource()
+        resource.buy(ticket)
+        return redirect(url_tickets)
+    return render_template("index.html", name_page="Покупка", buy_form=form)
 
 
 @app.route("/book/<int:ticket>", methods=["GET", "POST"])
@@ -125,7 +131,6 @@ def book(ticket):
 def personal_area():
     resource = PersonalAreaResource()
     tickets = resource.get_user_tickets()
-    print(tickets)
     return render_template("index.html", name_page="Кабинет", user_tickets=tickets)
 
 

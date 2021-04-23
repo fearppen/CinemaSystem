@@ -132,5 +132,28 @@
             </tbody>
         </table>
     {% endif %}
+    {% if buy_form %}
+        <form name="buy_form" method="POST">
+            {{ buy_form.hidden_tag() }}
+            <div class="mb-3">
+                {{ buy_form.name(class="form-control", placeholder="Имя") }}
+            </div>
+            <div class="mb-3">
+                {{ buy_form.surname(class="form-control", placeholder="Фамилия") }}
+            </div>
+            <div class="mb-3">
+                {{ buy_form.number_card(class="form-control", placeholder="Номер карты") }}
+            </div>
+            <div class="mb-3">
+                {{ buy_form.code_security(class="form-control", placeholder="Код безопасности") }}
+            </div>
+            <div class="mb-3">
+                {{ buy_form.submit(type="submit", class="btn btn-primary") }}
+            </div>
+            <div class="mb-3">
+                {{ message }}
+            </div>
+        </form>
+    {% endif %}
 </div>
 {% endblock %}

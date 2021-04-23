@@ -13,11 +13,11 @@
         <header>
             <nav class="navbar navbar-light bg-light">
                 <p>
-                    <a class="btn btn-light" href="/">Билетная система</a>
+                    <a class="btn btn-primary" href="/">Билетная система</a>
                 </p>
                 {% if current_user.is_authenticated %}
                     <p>
-                        <a class="btn btn-light" href="/personal_area">Личный кабинет</a>
+                        <a class="btn btn-success" href="/personal_area">Личный кабинет</a>
                         <a class="btn btn-danger" href="/logout">Выйти</a>
                     </p>
                 {% else %}
