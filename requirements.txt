@@ -3,3 +3,4 @@ sqlalchemy
 werkzeug
 flask
 flask_restful
+flask_login
