@@ -217,7 +217,7 @@ def get_one_chair(chair_id):
 
 @blueprint.route("/api/chair", methods=["POST"])
 def create_chair():
-    return check_request_chair(request, "post")
+    return check_request_chair(request.json, "post")
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
