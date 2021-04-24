@@ -20,7 +20,6 @@ class RegistrationService:
             user.password = generate_password_hash(user.password)
             try:
                 self.user_resource.post(user)
-                login_user(user, remember=form.submit.data)
                 return ""
             except Exception:
                 return "Такой пользователь уже есть в базе данных"
