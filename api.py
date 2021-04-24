@@ -70,9 +70,8 @@ def check_request_chair(req, method, chair_id=None):
 
 
 def check_request_cinema(req, method, cinema_id=None):
-    if not req:
-        return jsonify({"error": "Empty request"})
-    elif not all(key in req for key in
+
+    if not all(key in req for key in
                  ["title"]):
         return jsonify({"error": "Bad request"})
     else:
