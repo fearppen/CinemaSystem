@@ -53,18 +53,21 @@ user_resource = UserResource()
 user_list_resource = UsersListResources()
 
 
-def check_request_chair(req):
-    if not req:
+def check_request_chair(req, method, chair_id=None):
+    if not req.json:
         return jsonify({"error": "Empty request"})
-    elif not all(key in req for key in
+    elif not all(item in req.json for item in
                  ["row", "place", "hall_id"]):
         return jsonify({"error": "Bad request"})
     else:
         chair = Chair()
-        chair.row = req["row"]
-        chair.place = req["place"]
-        chair.hall_id = req["hall_id"]
-        return chair
+        chair.row = req.json["row"]
+        chair.place = req.json["place"]
+        chair.hall_id = req.json["hall_id"]
+        if method == "post":
+            return jsonify(chair_resource.post(chair))
+        elif method == "put":
+            return jsonify(chair_resource.put(chair_id, chair))
 
 
 def check_request_cinema(req):
@@ -203,18 +206,12 @@ def get_one_chair(chair_id):
 
 @blueprint.route("/api/chair", methods=["POST"])
 def create_chair():
-    try:
-        return jsonify(chair_resource.post(check_request_chair(request.data)))
-    except:
-        return jsonify(check_request_chair(request.data))
+    return check_request_chair(request, "post")
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
 def edit_chair(chair_id):
-    try:
-        return jsonify(chair_resource.put(chair_id, check_request_chair(request)))
-    except:
-        return jsonify(check_request_chair(request))
+    return jsonify(chair_id, check_request_chair(request, "put", chair_id))
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["DELETE"])
