@@ -19,7 +19,6 @@ from controllers.users_controller import UserResource, UsersListResources
 from domain.cinema import Cinema
 from domain.cost import Cost
 from domain.film import Film
-from domain.genre import Genre
 from domain.hall import Hall
 from domain.record import Record
 from domain.session import Session
@@ -54,23 +53,23 @@ user_list_resource = UsersListResources()
 
 
 def check_request_chair(req, method, chair_id=None):
-    if not req.json:
+    if not req:
         return jsonify({"error": "Empty request"})
-    elif not all(item in req.json for item in
+    elif not all(item in req for item in
                  ["row", "place", "hall_id"]):
         return jsonify({"error": "Bad request"})
     else:
         chair = Chair()
-        chair.row = req.json["row"]
-        chair.place = req.json["place"]
-        chair.hall_id = req.json["hall_id"]
+        chair.row = req["row"]
+        chair.place = req["place"]
+        chair.hall_id = req["hall_id"]
         if method == "post":
             return jsonify(chair_resource.post(chair))
         elif method == "put":
             return jsonify(chair_resource.put(chair_id, chair))
 
 
-def check_request_cinema(req):
+def check_request_cinema(req, method, cinema_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -79,10 +78,13 @@ def check_request_cinema(req):
     else:
         cinema = Cinema()
         cinema.title = req["title"]
-        return cinema
+        if method == "post":
+            return jsonify(cinema_resource.post(cinema))
+        elif method == "put":
+            return jsonify(cinema_resource.put(cinema_id, cinema))
 
 
-def check_request_cost(req):
+def check_request_cost(req, method, cost_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -92,10 +94,13 @@ def check_request_cost(req):
         cost = Cost()
         cost.cost = req["cost"]
         cost.session_id = req["session_id"]
-        return cost
+        if method == "post":
+            return jsonify(cost_resource.post(cost))
+        elif method == "put":
+            return jsonify(cost_id, cost)
 
 
-def check_request_film(req):
+def check_request_film(req, method, film_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -108,22 +113,13 @@ def check_request_film(req):
         film.duration = req["duration"]
         film.director = req["director"]
         film.genre_id = req["genre_id"]
-        return film
+        if method == "post":
+            return jsonify(film_resource.post(film))
+        elif method == "put":
+            return jsonify(film_resource.put(film_id, film))
 
 
-def check_request_genre(req):
-    if not req:
-        return jsonify({"error": "Empty request"})
-    elif not all(key in req for key in
-                 ["title"]):
-        return jsonify({"error": "Bad request"})
-    else:
-        genre = Genre()
-        genre.title = req["title"]
-        return genre
-
-
-def check_request_hall(req):
+def check_request_hall(req, method, hall_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -133,10 +129,13 @@ def check_request_hall(req):
         hall = Hall()
         hall.title = req["title"]
         hall.cinema_id = req["cinema_id"]
-        return hall
+        if method == "post":
+            return jsonify(hall_resource.post(hall))
+        elif method == "put":
+            return jsonify(hall_resource.put(hall_id, hall))
 
 
-def check_request_record(req):
+def check_request_record(req, method, record_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -148,10 +147,13 @@ def check_request_record(req):
         record.record_type_id = req["record_type_id"]
         record.ticket_id = req["ticket_id"]
         record.user_id = req["user_id"]
-        return record
+        if method == "post":
+            return jsonify(record_resource.post(record))
+        elif method == "put":
+            return jsonify(record_resource.put(record_id, record))
 
 
-def check_request_session(req):
+def check_request_session(req, method, session_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -161,10 +163,13 @@ def check_request_session(req):
         session = Session()
         session.session_datetime = req["session_datetime"]
         session.film_id = req["film_id"]
-        return session
+        if method == "post":
+            return jsonify(session_resource.post(session))
+        elif method == "put":
+            return jsonify(session_resource.put(session_id, session))
 
 
-def check_request_ticket(req):
+def check_request_ticket(req, method, ticket_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -176,10 +181,13 @@ def check_request_ticket(req):
         ticket.cost = req["cost"]
         ticket.chair_id = req["chair_id"]
         ticket.session_id = req["session_id"]
-        return ticket
+        if method == "post":
+            return jsonify(ticket_resource.post(ticket))
+        elif method == "put":
+            return jsonify(ticket_resource.put(ticket_id, ticket))
 
 
-def check_request_user(req):
+def check_request_user(req, method, user_id=None):
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -191,7 +199,10 @@ def check_request_user(req):
         user.password = generate_password_hash(req["password"])
         user.email = req["email"]
         user.role_id = req["role_id"]
-        return user
+        if method == "post":
+            return jsonify(user_resource.post(user))
+        elif method == "put":
+            return jsonify(user_resource.put(user_id, user))
 
 
 @blueprint.route("/api/chair")
@@ -211,7 +222,7 @@ def create_chair():
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
 def edit_chair(chair_id):
-    return jsonify(chair_id, check_request_chair(request, "put", chair_id))
+    return check_request_chair(request.json, "put", chair_id)
 
 
 @blueprint.route("/api/chair/<int:chair_id>", methods=["DELETE"])
@@ -231,18 +242,12 @@ def get_one_cinema(cinema_id):
 
 @blueprint.route("/api/cinema", methods=["POST"])
 def create_cinema():
-    try:
-        return jsonify(cinema_resource.post(check_request_cinema(request.json)))
-    except:
-        return jsonify(check_request_cinema(request.json))
+    return check_request_cinema(request.json, method='post')
 
 
 @blueprint.route("/api/cinema/<int:cinema_id>", methods=["PUT"])
 def edit_cinema(cinema_id):
-    try:
-        return jsonify(cinema_resource.put(cinema_id, check_request_cinema(request.json)))
-    except:
-        return jsonify(check_request_cinema(request.json))
+    return check_request_cinema(request.json, method='put', cinema_id=cinema_id)
 
 
 @blueprint.route("/api/cinema/<int:cinema_id>", methods=["DELETE"])
@@ -262,18 +267,12 @@ def get_one_cost(cost_id):
 
 @blueprint.route("/api/cost", methods=["POST"])
 def create_cost():
-    try:
-        return jsonify(cost_resource.post(check_request_cost(request.json)))
-    except:
-        return jsonify(check_request_cost(request.json))
+    return check_request_cost(request.json, method="post")
 
 
 @blueprint.route("/api/cost/<int:cost_id>", methods=["PUT"])
 def edit_cost(cost_id):
-    try:
-        return jsonify(cost_resource.put(cost_id, check_request_cost(request.json)))
-    except:
-        return jsonify(check_request_cost(request.json))
+    return check_request_cost(request.json, method="put", cost_id=cost_id)
 
 
 @blueprint.route("/api/cost/<int:cost_id>", methods=["DELETE"])
@@ -293,18 +292,12 @@ def get_one_film(film_id):
 
 @blueprint.route("/api/film", methods=["POST"])
 def create_film():
-    try:
-        return jsonify(film_resource.post(check_request_film(request.json)))
-    except:
-        return jsonify(check_request_film(request.json))
+    return check_request_film(request.json, method="post")
 
 
 @blueprint.route("/api/film/<int:film_id>", methods=["PUT"])
 def edit_film(film_id):
-    try:
-        return jsonify(film_resource.put(film_id, check_request_film(request.json)))
-    except:
-        return jsonify(check_request_film(request.json))
+    return check_request_film(request.json, method="post", film_id=film_id)
 
 
 @blueprint.route("/api/film/<int:film_id>", methods=["DELETE"])
@@ -334,18 +327,12 @@ def get_one_hall(hall_id):
 
 @blueprint.route("/api/hall", methods=["POST"])
 def create_hall():
-    try:
-        return jsonify(hall_resource.post(check_request_hall(request.json)))
-    except:
-        return jsonify(check_request_hall(request.json))
+    return check_request_hall(request.json, method="post")
 
 
 @blueprint.route("/api/hall/<int:hall_id>", methods=["PUT"])
 def edit_hall(hall_id):
-    try:
-        return jsonify(hall_resource.put(hall_id, check_request_hall(request.json)))
-    except:
-        return jsonify(check_request_hall(request.json))
+    return check_request_hall(request.json, method="post", hall_id=hall_id)
 
 
 @blueprint.route("/api/hall/<int:hall_id>", methods=["DELETE"])
@@ -365,18 +352,12 @@ def get_one_record(record_id):
 
 @blueprint.route("/api/record", methods=["POST"])
 def create_record():
-    try:
-        return jsonify(record_resource.post(check_request_record(request.json)))
-    except:
-        return jsonify(check_request_record(request.json))
+    return check_request_record(request.json, method="post")
 
 
 @blueprint.route("/api/record/<int:record_id>", methods=["PUT"])
 def edit_record(record_id):
-    try:
-        return jsonify(record_resource.put(record_id, check_request_record(request.json)))
-    except:
-        return jsonify(check_request_record(request.json))
+    return check_request_record(request.json, method="post", record_id=record_id)
 
 
 @blueprint.route("/api/record/<int:record_id>", methods=["DELETE"])
@@ -416,18 +397,12 @@ def get_one_session(session_id):
 
 @blueprint.route("/api/session", methods=["POST"])
 def create_session():
-    try:
-        return jsonify(session_resource.post(check_request_session(request.json)))
-    except:
-        return jsonify(check_request_session(request.json))
+    return check_request_session(request.json, method="post")
 
 
 @blueprint.route("/api/session/<int:session_id>", methods=["PUT"])
 def edit_session(session_id):
-    try:
-        return jsonify(session_resource.put(session_id, check_request_session(request.json)))
-    except:
-        return jsonify(check_request_session(request.json))
+    return check_request_session(request.json, method="post", session_id=session_id)
 
 
 @blueprint.route("/api/session/<int:session_id>", methods=["DELETE"])
@@ -447,18 +422,12 @@ def get_one_ticket(ticket_id):
 
 @blueprint.route("/api/ticket", methods=["POST"])
 def create_ticket():
-    try:
-        return jsonify(ticket_resource.post(check_request_ticket(request.json)))
-    except:
-        return jsonify(check_request_ticket(request.json))
+    return check_request_ticket(request.json, method='post')
 
 
 @blueprint.route("/api/ticket/<int:ticket_id>", methods=["PUT"])
 def edit_ticket(ticket_id):
-    try:
-        return jsonify(ticket_resource.put(ticket_id, check_request_ticket(request.json)))
-    except:
-        return jsonify(check_request_ticket(request.json))
+    return check_request_ticket(request.json, method='put', ticket_id=ticket_id)
 
 
 @blueprint.route("/api/ticket/<int:ticket_id>", methods=["DELETE"])
@@ -478,18 +447,12 @@ def get_one_user(user_id):
 
 @blueprint.route("/api/user", methods=["POST"])
 def create_user():
-    try:
-        return jsonify(user_resource.post(check_request_user(request.json)))
-    except:
-        return jsonify(check_request_user(request.json))
+    return check_request_user(request.json, method="post")
 
 
 @blueprint.route("/api/user/<int:user_id>", methods=["PUT"])
 def edit_user(user_id):
-    try:
-        return jsonify(user_resource.put(user_id, check_request_user(request.json)))
-    except:
-        return jsonify(check_request_user(request.json))
+    return check_request_user(request.json, method="put", user_id=user_id)
 
 
 @blueprint.route("/api/user/<int:user_id>", methods=["DELETE"])
