@@ -70,8 +70,9 @@ def check_request_chair(req, method, chair_id=None):
 
 
 def check_request_cinema(req, method, cinema_id=None):
-
-    if not all(key in req for key in
+    if not req:
+        return jsonify({"error": "Empty request"})
+    elif not all(key in req for key in
                  ["title"]):
         return jsonify({"error": "Bad request"})
     else:
@@ -291,7 +292,7 @@ def get_one_film(film_id):
 
 @blueprint.route("/api/film", methods=["POST"])
 def create_film():
-    return check_request_film(request.json, method="post")
+    return check_request_film(request.args, method="post")
 
 
 @blueprint.route("/api/film/<int:film_id>", methods=["PUT"])
