@@ -2,7 +2,6 @@ from domain.user import User
 from controllers.users_controller import UserResource, UsersListResources
 from forms.registration_form import RegistrationForm
 from werkzeug.security import generate_password_hash
-from flask_login import login_user
 
 
 class RegistrationService:
