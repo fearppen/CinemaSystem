@@ -292,7 +292,7 @@ def get_one_film(film_id):
 
 @blueprint.route("/api/film", methods=["POST"])
 def create_film():
-    return check_request_film(request.args, method="post")
+    return check_request_film(request.json, method="post")
 
 
 @blueprint.route("/api/film/<int:film_id>", methods=["PUT"])
