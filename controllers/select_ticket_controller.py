@@ -6,4 +6,4 @@ class SelectTicketResource(Resource):
     select_ticket_service = SelectTicketService()
 
     def get(self, hall_id, session_id):
-        return {"tickets": self.select_ticket_service.select_ticket(hall_id, session_id)}
+        return self.select_ticket_service.select_ticket(hall_id, session_id)

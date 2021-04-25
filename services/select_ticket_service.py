@@ -23,4 +23,4 @@ class SelectTicketService:
             ticket["row"] = chair["row"]
             ticket["place"] = chair["place"]
         tickets.sort(key=lambda x: (x["row"], x["place"]))
-        return tickets
+        return {"tickets": tickets}
