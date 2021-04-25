@@ -22,6 +22,7 @@ class PersonalAreaService:
             chair = self.chair_resource.get(ticket["chair_id"])["chair"][0]
             ticket["row"] = chair["row"]
             ticket["place"] = chair["place"]
+            ticket["purchase_date"] = record["purchase_date"]
             if operation["title"] == "Бронирование":
                 ticket["operation"] = "Забронирован"
             else:
