@@ -5,7 +5,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class Ticket(SqlAlchemyBase, SerializerMixin):
+class Ticket(SqlAlchemyBase, SerializerMixin):  # модель для работы с таблицей билетов
     __tablename__ = "tickets"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

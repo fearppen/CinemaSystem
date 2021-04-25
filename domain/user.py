@@ -6,7 +6,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class User(SqlAlchemyBase, SerializerMixin, UserMixin):
+class User(SqlAlchemyBase, SerializerMixin, UserMixin):  # модель для работы с таблицей пользователей
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

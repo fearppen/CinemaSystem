@@ -4,7 +4,7 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
 
 
-class AuthorisationForm(FlaskForm):
+class AuthorisationForm(FlaskForm):  # форма авторизации
     email = EmailField(validators=[DataRequired()])
     password = PasswordField(validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')

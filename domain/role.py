@@ -5,7 +5,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class Role(SqlAlchemyBase, SerializerMixin):
+class Role(SqlAlchemyBase, SerializerMixin):  # модель для работы с таблицей ролей пользователей
     __tablename__ = "roles"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

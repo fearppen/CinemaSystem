@@ -5,7 +5,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class Film(SqlAlchemyBase, SerializerMixin):
+class Film(SqlAlchemyBase, SerializerMixin):  # модель для работы с таблицей фильмов
     __tablename__ = 'films'
 
     id = Column(Integer, primary_key=True, autoincrement=True)

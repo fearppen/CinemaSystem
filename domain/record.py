@@ -5,7 +5,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class Record(SqlAlchemyBase, SerializerMixin):
+class Record(SqlAlchemyBase, SerializerMixin):  # модель для работы с таблицей записей
     __tablename__ = "records"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

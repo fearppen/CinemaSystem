@@ -3,12 +3,12 @@ import sqlalchemy.ext.declarative as dec
 import sqlalchemy.orm as orm
 from sqlalchemy.orm import Session
 
-SqlAlchemyBase = dec.declarative_base()
+SqlAlchemyBase = dec.declarative_base()  # абстрактная декларативная бд
 
-__factory = None
+__factory = None  # отвечает за получения сессий подключения к бд
 
 
-def global_init(db_file):
+def global_init(db_file):  # подключение к бд
     global __factory
 
     if __factory:
@@ -28,6 +28,6 @@ def global_init(db_file):
     SqlAlchemyBase.metadata.create_all(engine)
 
 
-def create_session() -> Session:
+def create_session() -> Session:  # создание сессий
     global __factory
     return __factory()

@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
-class BuyForm(FlaskForm):
+class BuyForm(FlaskForm):  # форма для покупки
     name = StringField(validators=[DataRequired()])
     surname = StringField(validators=[DataRequired()])
     number_card = StringField(validators=[DataRequired()])

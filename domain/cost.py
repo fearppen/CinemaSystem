@@ -5,7 +5,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class Cost(SqlAlchemyBase, SerializerMixin):
+class Cost(SqlAlchemyBase, SerializerMixin):  # модель для работы с таблицей цен
     __tablename__ = "costs"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

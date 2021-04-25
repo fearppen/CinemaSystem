@@ -1,3 +1,4 @@
+# хранение моделей для работы с базой данных
 from .genre import Genre
 from .film import Film
 from .session import Session

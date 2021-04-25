@@ -34,7 +34,7 @@ filter_ticket_form = None
 url_tickets = ""
 
 
-def filter_film_form_data():
+def filter_film_form_data():  # добавление данных для формы фильтрации фильмов
     cinemas_resource = CinemasListResources()
     cinemas = cinemas_resource.get()["cinemas"]
     genres_resources = GenreListResources()
@@ -45,6 +45,7 @@ def filter_film_form_data():
     return filter_film_form
 
 
+# добавление данных для формы фильтрации билетов
 def filter_ticket_form_data(halls: str, sessions: str):
     halls_resource = HallResource()
     halls = [halls_resource.get(int(hall_id))["hall"][0] for hall_id in halls.split(",")]
@@ -59,13 +60,13 @@ def filter_ticket_form_data(halls: str, sessions: str):
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id):  # получение пользователя из бд
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
 
 @app.route("/", methods=["GET", "POST"])
-def index():
+def index():  # фукнция для основной страницы и фильтрации фильмов
     filter_film_form = filter_film_form_data()
     if filter_film_form.validate_on_submit():
         return redirect(
@@ -74,7 +75,7 @@ def index():
 
 
 @app.route("/filter_by/<int:cinema>,<int:genre>", methods=["GET", "POST"])
-def filter_films(cinema, genre):
+def filter_films(cinema, genre):  # функция для страницы показа фильмов
     filter_film_form = filter_film_form_data()
     resource = SelectFilmResource()
     films = resource.get(cinema, genre)["films"]
@@ -86,7 +87,7 @@ def filter_films(cinema, genre):
 
 
 @app.route("/tickets_index/<string:halls>,<string:sessions>", methods=["GET", "POST"])
-def tickets_index(halls, sessions):
+def tickets_index(halls, sessions):  # функция для страницы фильтрации билетов
     global filter_ticket_form, url_tickets
     filter_ticket_form = filter_ticket_form_data(halls, sessions)
     if filter_ticket_form.validate_on_submit():
@@ -98,7 +99,7 @@ def tickets_index(halls, sessions):
 
 
 @app.route("/filter_tickets/<int:hall>,<int:session>", methods=["GET", "POST"])
-def filter_tickets(hall, session):
+def filter_tickets(hall, session):  # функция для страницы показа билетов
     global filter_ticket_form, url_tickets
     resource = SelectTicketResource()
     tickets = resource.get(hall, session)["tickets"]
@@ -111,7 +112,7 @@ def filter_tickets(hall, session):
 
 
 @app.route("/buy/<int:ticket>", methods=["GET", "POST"])
-def buy(ticket):
+def buy(ticket):  # функция для покупки билетов
     form = BuyForm()
     if form.validate_on_submit():
         resource = BuyResource()
@@ -121,21 +122,21 @@ def buy(ticket):
 
 
 @app.route("/book/<int:ticket>", methods=["GET", "POST"])
-def book(ticket):
+def book(ticket):  # функция для бронирования билетов
     resource = BookResource()
     resource.book(ticket)
     return redirect(url_tickets)
 
 
 @app.route("/personal_area", methods=["GET", "POST"])
-def personal_area():
+def personal_area():  # функция для страницы показа личного кабинета
     resource = PersonalAreaResource()
     tickets = resource.get_user_tickets()
     return render_template("index.html", name_page="Кабинет", user_tickets=tickets)
 
 
 @app.route("/authorisation", methods=["GET", "POST"])
-def authorisation():
+def authorisation():  # функция для страницы авторизации
     form = AuthorisationForm()
     if form.validate_on_submit():
         resource = LoginResource()
@@ -150,7 +151,7 @@ def authorisation():
 
 
 @app.route("/registration", methods=["GET", "POST"])
-def registration():
+def registration():  # функция для страницы регистрации
     form = RegistrationForm()
     if form.validate_on_submit():
         resource = RegistrationResource()
@@ -166,7 +167,7 @@ def registration():
 
 @app.route("/logout")
 @login_required
-def logout():
+def logout():  # функция для выхода из аккаунта пользователя
     resource = LogoutUser()
     resource.logout()
     return redirect("/")

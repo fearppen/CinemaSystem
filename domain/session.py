@@ -6,7 +6,7 @@ from domain.hall_session import hall_session_table
 from sqlalchemy_serializer import SerializerMixin
 
 
-class Session(SqlAlchemyBase, SerializerMixin):
+class Session(SqlAlchemyBase, SerializerMixin):  # модель для работы с таблицей сессий
     __tablename__ = "sessions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

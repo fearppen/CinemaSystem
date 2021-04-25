@@ -5,7 +5,7 @@ from domain.db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
 
 
-class Chair(SqlAlchemyBase, SerializerMixin):
+class Chair(SqlAlchemyBase, SerializerMixin):  # модель для работы с таблицей стульев
     __tablename__ = "chairs"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
