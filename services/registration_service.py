@@ -4,11 +4,11 @@ from forms.registration_form import RegistrationForm
 from werkzeug.security import generate_password_hash
 
 
-class RegistrationService:
+class RegistrationService:  # сервис для регистрации пользователя
     user_resource = UserResource()
     user_list_resource = UsersListResources()
 
-    def registration(self, form: RegistrationForm):
+    def registration(self, form: RegistrationForm):  # регистрация
         user = User()
         user.login = form.login.data
         user.email = form.email.data

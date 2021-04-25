@@ -6,6 +6,7 @@ from controllers.users_controller import UsersListResources
 from repository.users_repository import UsersRepositorySQLAlchemy
 
 
+# функция проверки пользователя на наличие в бд
 def is_this_user_in_bd(all_users: dict, form: AuthorisationForm, email, password):
     for _, users in all_users.items():
         for i in users:
@@ -24,8 +25,8 @@ def is_this_user_in_bd(all_users: dict, form: AuthorisationForm, email, password
     return "Такого пользователя не существует"
 
 
-class LoginService:
-    def login(self, form: AuthorisationForm):
+class LoginService:  # сервис для авторизации пользователя
+    def login(self, form: AuthorisationForm):  # авторизация
         email = form.email
         password = form.password
         all_users = UsersListResources().get()

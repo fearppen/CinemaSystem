@@ -4,13 +4,13 @@ from controllers.session_controller import SessionResource
 from controllers.ticket_controller import TicketsListResources
 
 
-class SelectTicketService:
+class SelectTicketService:  # сервис для фильтрации билетов по залу и сессии
     ticket_resource = TicketsListResources()
     chair_resource = ChairResource()
     session_resource = SessionResource()
     record_resource = RecordListResources()
 
-    def select_ticket(self, hall_id, session_id):
+    def select_ticket(self, hall_id, session_id):  # отфильтровать билеты
         busy_tickets = [record["ticket_id"] for record in self.record_resource.get()["records"]]
         tickets = list(filter(lambda ticket:
                               self.chair_resource.get(

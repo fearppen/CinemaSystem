@@ -6,13 +6,13 @@ from controllers.record_types_controller import RecordTypesResource
 from controllers.ticket_controller import TicketResource
 
 
-class PersonalAreaService:
+class PersonalAreaService:  # сервис для предоставления данных личного кабинета пользователя
     record_resource = RecordListResources()
     ticket_resource = TicketResource()
     record_type_resource = RecordTypesResource()
     chair_resource = ChairResource()
 
-    def get_user_tickets(self):
+    def get_user_tickets(self):  # получение билетов пользователя
         records = list(filter(lambda record: record["user_id"] == current_user.id,
                               self.record_resource.get()["records"]))
         tickets = [self.ticket_resource.get(record["ticket_id"])["ticket"][0] for record in records]

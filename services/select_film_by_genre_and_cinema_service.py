@@ -4,7 +4,7 @@ from controllers.hall_session_controller import HallSessionListResources
 from controllers.session_controller import SessionListResources, SessionResource
 
 
-class SelectFilmService:
+class SelectFilmService:  # сервис для фильтрации фильмов по кинотеатру и жанру
     hall_resource = HallListResources()
     films_resource = FilmListResources()
     film_resource = FilmResource()
@@ -12,7 +12,7 @@ class SelectFilmService:
     sessions_resource = SessionListResources()
     session_resource = SessionResource()
 
-    def select_film(self, cinema_id, genre_id):
+    def select_film(self, cinema_id, genre_id):  # отфильтровать фильмы
         all_halls = self.hall_resource.get()["halls"]
         all_films = self.films_resource.get()["films"]
         all_sessions = self.sessions_resource.get()["sessions"]
