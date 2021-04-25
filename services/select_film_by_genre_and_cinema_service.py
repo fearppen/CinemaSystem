@@ -54,4 +54,4 @@ class SelectFilmService:
                                 necessary_films[index]["sessions_id"] += f",{session_id}"
                                 necessary_films[index]["halls_id"] += f",{hall_id}"
 
-        return necessary_films
+        return {"films": necessary_films}

@@ -6,4 +6,4 @@ class SelectFilmResource(Resource):
     select_film_service = SelectFilmService()
 
     def get(self, cinema_id, genre_id):
-        return {"films": self.select_film_service.select_film(cinema_id, genre_id)}
+        return self.select_film_service.select_film(cinema_id, genre_id)
