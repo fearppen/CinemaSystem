@@ -52,7 +52,7 @@ user_resource = UserResource()
 user_list_resource = UsersListResources()
 
 
-def check_request_chair(req, method, chair_id=None):
+def check_request_chair(req, method, chair_id=None):  # проверяет запрос для кресел
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(item in req for item in
@@ -69,7 +69,7 @@ def check_request_chair(req, method, chair_id=None):
             return jsonify(chair_resource.put(chair_id, chair))
 
 
-def check_request_cinema(req, method, cinema_id=None):
+def check_request_cinema(req, method, cinema_id=None):  # проверяет запрос для кинотеатров
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -84,11 +84,11 @@ def check_request_cinema(req, method, cinema_id=None):
             return jsonify(cinema_resource.put(cinema_id, cinema))
 
 
-def check_request_cost(req, method, cost_id=None):
+def check_request_cost(req, method, cost_id=None):  # проверяет запрос для цен
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
-                 ["title"]):
+                 ["cost", "session_id"]):
         return jsonify({"error": "Bad request"})
     else:
         cost = Cost()
@@ -100,7 +100,7 @@ def check_request_cost(req, method, cost_id=None):
             return jsonify(cost_id, cost)
 
 
-def check_request_film(req, method, film_id=None):
+def check_request_film(req, method, film_id=None):  # проверяет запрос для фильмов
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -119,7 +119,7 @@ def check_request_film(req, method, film_id=None):
             return jsonify(film_resource.put(film_id, film))
 
 
-def check_request_hall(req, method, hall_id=None):
+def check_request_hall(req, method, hall_id=None):  # проверяет запрос для холлов
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -135,7 +135,7 @@ def check_request_hall(req, method, hall_id=None):
             return jsonify(hall_resource.put(hall_id, hall))
 
 
-def check_request_record(req, method, record_id=None):
+def check_request_record(req, method, record_id=None):  # проверяет запрос для записей
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -153,7 +153,7 @@ def check_request_record(req, method, record_id=None):
             return jsonify(record_resource.put(record_id, record))
 
 
-def check_request_session(req, method, session_id=None):
+def check_request_session(req, method, session_id=None):  # проверяет запрос для сессий
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -169,7 +169,7 @@ def check_request_session(req, method, session_id=None):
             return jsonify(session_resource.put(session_id, session))
 
 
-def check_request_ticket(req, method, ticket_id=None):
+def check_request_ticket(req, method, ticket_id=None):  # проверяет запрос для билетов
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -187,7 +187,7 @@ def check_request_ticket(req, method, ticket_id=None):
             return jsonify(ticket_resource.put(ticket_id, ticket))
 
 
-def check_request_user(req, method, user_id=None):
+def check_request_user(req, method, user_id=None):  # проверяет запрос для пользователей
     if not req:
         return jsonify({"error": "Empty request"})
     elif not all(key in req for key in
@@ -205,256 +205,256 @@ def check_request_user(req, method, user_id=None):
             return jsonify(user_resource.put(user_id, user))
 
 
-@blueprint.route("/api/chair")
+@blueprint.route("/api/chair")  # получить все кресла
 def get_all_chairs():
     return jsonify(chair_list_resource.get())
 
 
-@blueprint.route("/api/chair/<int:chair_id>")
+@blueprint.route("/api/chair/<int:chair_id>")  # получить одно кресло
 def get_one_chair(chair_id):
     return jsonify(chair_resource.get(chair_id))
 
 
-@blueprint.route("/api/chair", methods=["POST"])
+@blueprint.route("/api/chair", methods=["POST"])  # создать кресло
 def create_chair():
     return check_request_chair(request.json, "post")
 
 
-@blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])
+@blueprint.route("/api/chair/<int:chair_id>", methods=["PUT"])  # изменить кресло
 def edit_chair(chair_id):
     return check_request_chair(request.json, "put", chair_id)
 
 
-@blueprint.route("/api/chair/<int:chair_id>", methods=["DELETE"])
+@blueprint.route("/api/chair/<int:chair_id>", methods=["DELETE"])  # удалить кресло
 def delete_chair(chair_id):
     return jsonify(chair_resource.delete(chair_id))
 
 
-@blueprint.route("/api/cinema")
+@blueprint.route("/api/cinema")  # получить все кинотеатры
 def get_all_cinemas():
     return jsonify(cinema_list_resource.get())
 
 
-@blueprint.route("/api/cinema/<int:cinema_id>")
+@blueprint.route("/api/cinema/<int:cinema_id>")  # получить один кинотеатр
 def get_one_cinema(cinema_id):
     return jsonify(cinema_resource.get(cinema_id))
 
 
-@blueprint.route("/api/cinema", methods=["POST"])
+@blueprint.route("/api/cinema", methods=["POST"])  # создать кинотеатр
 def create_cinema():
     return check_request_cinema(request.json, method='post')
 
 
-@blueprint.route("/api/cinema/<int:cinema_id>", methods=["PUT"])
+@blueprint.route("/api/cinema/<int:cinema_id>", methods=["PUT"])  # изменить кинотатр
 def edit_cinema(cinema_id):
     return check_request_cinema(request.json, method='put', cinema_id=cinema_id)
 
 
-@blueprint.route("/api/cinema/<int:cinema_id>", methods=["DELETE"])
+@blueprint.route("/api/cinema/<int:cinema_id>", methods=["DELETE"])  # удалить кинотеатр
 def delete_cinema(cinema_id):
     return jsonify(cinema_resource.delete(cinema_id))
 
 
-@blueprint.route("/api/cost")
+@blueprint.route("/api/cost")  # получить все цены
 def get_all_cost():
     return jsonify(cost_list_resource.get())
 
 
-@blueprint.route("/api/cost/<int:cost_id>")
+@blueprint.route("/api/cost/<int:cost_id>")  # получтить одну цену
 def get_one_cost(cost_id):
     return jsonify(cost_resource.get(cost_id))
 
 
-@blueprint.route("/api/cost", methods=["POST"])
+@blueprint.route("/api/cost", methods=["POST"])  # создать одну цену
 def create_cost():
     return check_request_cost(request.json, method="post")
 
 
-@blueprint.route("/api/cost/<int:cost_id>", methods=["PUT"])
+@blueprint.route("/api/cost/<int:cost_id>", methods=["PUT"])  # изменить цену
 def edit_cost(cost_id):
     return check_request_cost(request.json, method="put", cost_id=cost_id)
 
 
-@blueprint.route("/api/cost/<int:cost_id>", methods=["DELETE"])
+@blueprint.route("/api/cost/<int:cost_id>", methods=["DELETE"])  # удалить цену
 def delete_cost(cost_id):
     return jsonify(cost_resource.delete(cost_id))
 
 
-@blueprint.route("/api/film")
+@blueprint.route("/api/film")  # получить все фильмы
 def get_all_film():
     return jsonify(film_list_resource.get())
 
 
-@blueprint.route("/api/film/<int:film_id>")
+@blueprint.route("/api/film/<int:film_id>")  # получить один фильм
 def get_one_film(film_id):
     return jsonify(film_resource.get(film_id))
 
 
-@blueprint.route("/api/film", methods=["POST"])
+@blueprint.route("/api/film", methods=["POST"])  # создать фильм
 def create_film():
     return check_request_film(request.json, method="post")
 
 
-@blueprint.route("/api/film/<int:film_id>", methods=["PUT"])
+@blueprint.route("/api/film/<int:film_id>", methods=["PUT"])  # изменить фильм
 def edit_film(film_id):
     return check_request_film(request.json, method="post", film_id=film_id)
 
 
-@blueprint.route("/api/film/<int:film_id>", methods=["DELETE"])
+@blueprint.route("/api/film/<int:film_id>", methods=["DELETE"])  # удалить фильм
 def delete_film(film_id):
     return jsonify(film_resource.delete(film_id))
 
 
-@blueprint.route("/api/genre")
+@blueprint.route("/api/genre")  # получить все жанры
 def get_all_genre():
     return jsonify(genre_list_resource.get())
 
 
-@blueprint.route("/api/genre/<int:genre_id>")
+@blueprint.route("/api/genre/<int:genre_id>")  # получить один жанр
 def get_one_genre(genre_id):
     return jsonify(genre_resource.get(genre_id))
 
 
-@blueprint.route("/api/hall")
+@blueprint.route("/api/hall")  # получить все холлы
 def get_all_halls():
     return jsonify(hall_list_resource.get())
 
 
-@blueprint.route("/api/hall/<int:hall_id>")
+@blueprint.route("/api/hall/<int:hall_id>")  # получить один холл
 def get_one_hall(hall_id):
     return jsonify(hall_resource.get(hall_id))
 
 
-@blueprint.route("/api/hall", methods=["POST"])
+@blueprint.route("/api/hall", methods=["POST"])  # создать холл
 def create_hall():
     return check_request_hall(request.json, method="post")
 
 
-@blueprint.route("/api/hall/<int:hall_id>", methods=["PUT"])
+@blueprint.route("/api/hall/<int:hall_id>", methods=["PUT"])  # изменить холл
 def edit_hall(hall_id):
     return check_request_hall(request.json, method="post", hall_id=hall_id)
 
 
-@blueprint.route("/api/hall/<int:hall_id>", methods=["DELETE"])
+@blueprint.route("/api/hall/<int:hall_id>", methods=["DELETE"])  # удалить холл
 def delete_hall(hall_id):
     return jsonify(hall_resource.delete(hall_id))
 
 
-@blueprint.route("/api/record")
+@blueprint.route("/api/record")  # получить все записи
 def get_all_records():
     return jsonify(record_list_resource.get())
 
 
-@blueprint.route("/api/record/<int:record_id>")
+@blueprint.route("/api/record/<int:record_id>")  # получить одну запись
 def get_one_record(record_id):
     return jsonify(record_resource.get(record_id))
 
 
-@blueprint.route("/api/record", methods=["POST"])
+@blueprint.route("/api/record", methods=["POST"])  # создать запись
 def create_record():
     return check_request_record(request.json, method="post")
 
 
-@blueprint.route("/api/record/<int:record_id>", methods=["PUT"])
+@blueprint.route("/api/record/<int:record_id>", methods=["PUT"])  # изменить запись
 def edit_record(record_id):
     return check_request_record(request.json, method="post", record_id=record_id)
 
 
-@blueprint.route("/api/record/<int:record_id>", methods=["DELETE"])
+@blueprint.route("/api/record/<int:record_id>", methods=["DELETE"])  # удалить запись
 def delete_record(record_id):
     return jsonify(record_resource.delete(record_id))
 
 
-@blueprint.route("/api/record_type")
+@blueprint.route("/api/record_type")  # получить все типы записей
 def get_all_record_types():
     return jsonify(record_type_list_resource.get())
 
 
-@blueprint.route("/api/record_type/<int:record_type_id>")
+@blueprint.route("/api/record_type/<int:record_type_id>")  # получить один тип записи
 def get_one_record_type(record_type_id):
     return jsonify(record_type_resource.get(record_type_id))
 
 
-@blueprint.route("/api/role")
+@blueprint.route("/api/role")  # получить все роли
 def get_all_roles():
     return jsonify(role_list_resource.get())
 
 
-@blueprint.route("/api/role/<int:role_id>")
+@blueprint.route("/api/role/<int:role_id>")  # получить одну роль
 def get_one_role(role_id):
     return jsonify(role_resource.get(role_id))
 
 
-@blueprint.route("/api/session")
+@blueprint.route("/api/session")  # получить все сессии
 def get_all_sessions():
     return jsonify(session_list_resource.get())
 
 
-@blueprint.route("/api/session/<int:session_id>")
+@blueprint.route("/api/session/<int:session_id>")  # получить одну сессию
 def get_one_session(session_id):
     return jsonify(session_resource.get(session_id))
 
 
-@blueprint.route("/api/session", methods=["POST"])
+@blueprint.route("/api/session", methods=["POST"])  # создать сессию
 def create_session():
     return check_request_session(request.json, method="post")
 
 
-@blueprint.route("/api/session/<int:session_id>", methods=["PUT"])
+@blueprint.route("/api/session/<int:session_id>", methods=["PUT"])  # изменить сессию
 def edit_session(session_id):
     return check_request_session(request.json, method="post", session_id=session_id)
 
 
-@blueprint.route("/api/session/<int:session_id>", methods=["DELETE"])
+@blueprint.route("/api/session/<int:session_id>", methods=["DELETE"])  # удалить сессию
 def delete_session(session_id):
     return jsonify(session_resource.delete(session_id))
 
 
-@blueprint.route("/api/ticket")
+@blueprint.route("/api/ticket")  # получить все билеты
 def get_all_tickets():
     return jsonify(ticket_list_resource.get())
 
 
-@blueprint.route("/api/ticket/<int:ticket_id>")
+@blueprint.route("/api/ticket/<int:ticket_id>")  # получить один билет
 def get_one_ticket(ticket_id):
     return jsonify(ticket_resource.get(ticket_id))
 
 
-@blueprint.route("/api/ticket", methods=["POST"])
+@blueprint.route("/api/ticket", methods=["POST"])  # создать билет
 def create_ticket():
     return check_request_ticket(request.json, method='post')
 
 
-@blueprint.route("/api/ticket/<int:ticket_id>", methods=["PUT"])
+@blueprint.route("/api/ticket/<int:ticket_id>", methods=["PUT"])  # изменить билет
 def edit_ticket(ticket_id):
     return check_request_ticket(request.json, method='put', ticket_id=ticket_id)
 
 
-@blueprint.route("/api/ticket/<int:ticket_id>", methods=["DELETE"])
+@blueprint.route("/api/ticket/<int:ticket_id>", methods=["DELETE"])  # удалить билет
 def delete_ticket(ticket_id):
     return jsonify(ticket_resource.delete(ticket_id))
 
 
-@blueprint.route("/api/user")
+@blueprint.route("/api/user")  # получить всех пользователей
 def get_all_users():
     return jsonify(user_list_resource.get())
 
 
-@blueprint.route("/api/user/<int:user_id>")
+@blueprint.route("/api/user/<int:user_id>")  # получить одного пользователя
 def get_one_user(user_id):
     return jsonify(user_resource.get(user_id))
 
 
-@blueprint.route("/api/user", methods=["POST"])
+@blueprint.route("/api/user", methods=["POST"])  # создать пользователя
 def create_user():
     return check_request_user(request.json, method="post")
 
 
-@blueprint.route("/api/user/<int:user_id>", methods=["PUT"])
+@blueprint.route("/api/user/<int:user_id>", methods=["PUT"])  # изменить пользователя
 def edit_user(user_id):
     return check_request_user(request.json, method="put", user_id=user_id)
 
 
-@blueprint.route("/api/user/<int:user_id>", methods=["DELETE"])
+@blueprint.route("/api/user/<int:user_id>", methods=["DELETE"])  # удалить пользователя
 def delete_user(user_id):
     return jsonify(user_resource.delete(user_id))
