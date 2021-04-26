@@ -97,7 +97,7 @@ def check_request_cost(req, method, cost_id=None):  # проверяет зап�
         if method == "post":
             return jsonify(cost_resource.post(cost))
         elif method == "put":
-            return jsonify(cost_id, cost)
+            return jsonify(cost_resource.put(cost_id, cost))
 
 
 def check_request_film(req, method, film_id=None):  # проверяет запрос для фильмов
