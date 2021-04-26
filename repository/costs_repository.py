@@ -49,5 +49,5 @@ class CostsRepositorySQLAlchemy(ICostsRepository):  # репзиторий це�
 
     def delete(self, cost_id: int):  # удалить цену
         new_db_session = db_session.create_session()
-        new_db_session.delete(new_db_session.query(Cost).filter(Cost.id == cost_id))
+        new_db_session.delete(self.get_cost(cost_id))
         new_db_session.commit()

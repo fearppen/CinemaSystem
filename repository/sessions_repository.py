@@ -49,5 +49,5 @@ class SessionsRepositorySQLAlchemy(ISessionsRepository):  # репзиторий
 
     def delete(self, session_id: int):  # удалить сессию
         new_db_session = db_session.create_session()
-        new_db_session.delete(new_db_session.query(Session).filter(Session.id == session_id))
+        new_db_session.delete(self.get_session(session_id))
         new_db_session.commit()

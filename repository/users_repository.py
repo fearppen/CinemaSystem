@@ -51,5 +51,5 @@ class UsersRepositorySQLAlchemy(IUsersRepository):  # репзиторий по�
 
     def delete(self, user_id: int):  # удалить пользователя
         new_db_session = db_session.create_session()
-        new_db_session.delete(new_db_session.query(User).filter(User.id == user_id))
+        new_db_session.delete(self.get_user(user_id))
         new_db_session.commit()

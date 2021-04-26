@@ -49,5 +49,5 @@ class HallsRepositorySQLAlchemy(IHallsRepository):  # репзиторий за�
 
     def delete(self, hall_id: int):  # удалить зал
         new_db_session = db_session.create_session()
-        new_db_session.delete(new_db_session.query(Hall).filter(Hall.id == hall_id))
+        new_db_session.delete(self.get_hall(hall_id))
         new_db_session.commit()
