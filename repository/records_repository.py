@@ -51,5 +51,5 @@ class RecordsRepositorySQLAlchemy(IRecordsRepository):  # репзиторий �
 
     def delete(self, record_id: int):  # удалить запись
         new_db_session = db_session.create_session()
-        new_db_session.delete(self.get_record(record_id))
+        new_db_session.delete(new_db_session.query(Record).filter(Record.id == record_id).first())
         new_db_session.commit()

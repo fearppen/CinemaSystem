@@ -51,5 +51,5 @@ class TicketsRepositorySQLAlchemy(ITicketsRepository):  # репзиторий �
 
     def delete(self, ticket_id: int):  # удалить билет
         new_db_session = db_session.create_session()
-        new_db_session.delete(self.get_ticket(ticket_id))
+        new_db_session.delete(new_db_session.query(Ticket).filter(Ticket.id == ticket_id).first())
         new_db_session.commit()

@@ -50,5 +50,5 @@ class ChairsRepositorySQLAlchemy(IChairsRepository):  # репзиторий с�
 
     def delete(self, chair_id: int):  # удалить стул
         new_db_session = db_session.create_session()
-        new_db_session.delete(self.get_chair(chair_id))
+        new_db_session.delete(new_db_session.query(Chair).filter(Chair.id == chair_id).first())
         new_db_session.commit()

@@ -52,5 +52,5 @@ class FilmsRepositorySQLAlchemy(IFilmsRepository):  # репзиторий фи�
 
     def delete(self, film_id: int):  # удалить фильм
         new_db_session = db_session.create_session()
-        new_db_session.delete(self.get_film(film_id))
+        new_db_session.delete(new_db_session.query(Film).filter(Film.id == film_id).first())
         new_db_session.commit()
