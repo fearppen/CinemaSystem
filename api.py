@@ -290,12 +290,14 @@ def get_one_film(film_id):
     return jsonify(film_resource.get(film_id))
 
 
-@blueprint.route("/api/film", methods=["POST"])  # создать фильм
+@blueprint.route("/api/film", methods=["POST"])  # создать фильм, нужен тип datetime python для
+# release_date
 def create_film():
     return check_request_film(request.json, method="post")
 
 
-@blueprint.route("/api/film/<int:film_id>", methods=["PUT"])  # изменить фильм
+@blueprint.route("/api/film/<int:film_id>", methods=["PUT"])  # изменить фильм, нужен тип datetime
+# python для release_date
 def edit_film(film_id):
     return check_request_film(request.json, method="post", film_id=film_id)
 
@@ -350,12 +352,14 @@ def get_one_record(record_id):
     return jsonify(record_resource.get(record_id))
 
 
-@blueprint.route("/api/record", methods=["POST"])  # создать запись
+@blueprint.route("/api/record", methods=["POST"])  # создать запись, нужен тип datetime python для
+# purchase_date
 def create_record():
     return check_request_record(request.json, method="post")
 
 
-@blueprint.route("/api/record/<int:record_id>", methods=["PUT"])  # изменить запись
+@blueprint.route("/api/record/<int:record_id>", methods=["PUT"])  # изменить запись, нужен тип
+# datetime python для purchase_date
 def edit_record(record_id):
     return check_request_record(request.json, method="post", record_id=record_id)
 
@@ -395,12 +399,14 @@ def get_one_session(session_id):
     return jsonify(session_resource.get(session_id))
 
 
-@blueprint.route("/api/session", methods=["POST"])  # создать сессию
+@blueprint.route("/api/session", methods=["POST"])  # создать сессию, нужен тип datetime python для
+# session_datetime
 def create_session():
     return check_request_session(request.json, method="post")
 
 
-@blueprint.route("/api/session/<int:session_id>", methods=["PUT"])  # изменить сессию
+@blueprint.route("/api/session/<int:session_id>", methods=["PUT"])  # изменить сессию, нужен тип
+# datetime python для session_datetime
 def edit_session(session_id):
     return check_request_session(request.json, method="post", session_id=session_id)
 
